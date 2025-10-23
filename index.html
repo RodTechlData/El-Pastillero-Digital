@@ -6,209 +6,225 @@
     <meta name="description" content="Sistema de gestión de medicamentos - El Pastillero Digital">
     <title>El Pastillero Digital - Gestión Inteligente de Medicamentos</title>
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Font Awesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navegación Principal -->
-    <header>
+    <!-- Navegación Horizontal -->
+    <header class="header">
         <nav class="navbar">
-            <div class="logo">
-                <h1>🏥 El Pastillero Digital</h1>
+            <div class="nav-container">
+                <!-- Logo -->
+                <div class="logo">
+                    <i class="fas fa-pills"></i>
+                    <span>El Pastillero Digital</span>
+                </div>
+                
+                <!-- Menú de navegación horizontal -->
+                <ul class="nav-menu">
+                    <li><a href="#inicio" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#medicamentos" class="nav-link"><i class="fas fa-capsules"></i> Medicamentos</a></li>
+                    <li><a href="#recordatorios" class="nav-link"><i class="fas fa-bell"></i> Recordatorios</a></li>
+                    <li><a href="#historial" class="nav-link"><i class="fas fa-history"></i> Historial</a></li>
+                    <li><a href="#contacto" class="nav-link"><i class="fas fa-phone"></i> Contacto</a></li>
+                </ul>
+                
+                <!-- Avatar de usuario -->
+                <div class="user-avatar">
+                    <img src="https://via.placeholder.com/40x40/4CAF50/ffffff?text=U" alt="Avatar Usuario" class="avatar-img">
+                    <span class="user-name">Usuario</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                
+                <!-- Botón hamburguesa para móviles -->
+                <button class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#inicio" class="nav-link">Inicio</a></li>
-                <li><a href="#funcionalidades" class="nav-link">Funcionalidades</a></li>
-                <li><a href="#medicamentos" class="nav-link">Medicamentos</a></li>
-                <li><a href="#recordatorios" class="nav-link">Recordatorios</a></li>
-                <li><a href="#historial" class="nav-link">Historial</a></li>
-                <li><a href="#contacto" class="nav-link">Contacto</a></li>
-            </ul>
-            <button class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
         </nav>
     </header>
 
-    <!-- Sección de Inicio -->
-    <section id="inicio" class="hero-section">
-        <div class="hero-content">
-            <h2>Bienvenido a El Pastillero Digital</h2>
-            <p>Tu asistente inteligente para gestionar medicamentos de forma segura y eficiente</p>
-            <a href="#medicamentos" class="cta-button">Comenzar Ahora</a>
-        </div>
-    </section>
-
-    <!-- Sección de Funcionalidades -->
-    <section id="funcionalidades" class="features-section">
-        <h2>Funcionalidades Principales</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">💊</div>
-                <h3>Gestión de Medicamentos</h3>
-                <p>Registra y organiza todos tus medicamentos con información detallada sobre dosis y frecuencia.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⏰</div>
-                <h3>Recordatorios Inteligentes</h3>
-                <p>Recibe notificaciones oportunas para nunca olvidar tomar tus medicamentos.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Historial Completo</h3>
-                <p>Lleva un registro detallado de tu tratamiento y comparte información con profesionales.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Seguridad y Privacidad</h3>
-                <p>Tus datos permanecen seguros y privados en tu dispositivo local.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Sección de Medicamentos -->
-    <section id="medicamentos" class="medication-section">
-        <h2>Gestión de Medicamentos</h2>
-        <div class="medication-form-container">
-            <form id="medicationForm">
-                <div class="form-group">
-                    <label for="medicationName">Nombre del Medicamento</label>
-                    <input type="text" id="medicationName" placeholder="Ej: Ibuprofeno" required>
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Sección Hero con Botón de Vida Central -->
+        <section id="inicio" class="hero-section">
+            <div class="hero-container">
+                <h1 class="hero-title">Gestión Inteligente de Medicamentos</h1>
+                <p class="hero-subtitle">Tu salud en tus manos con tecnología avanzada</p>
+                
+                <!-- Botón de Vida Central -->
+                <div class="vida-button-container">
+                    <button class="vida-button" id="vidaButton">
+                        <div class="vida-button-inner">
+                            <i class="fas fa-microphone" id="micIcon"></i>
+                            <span class="vida-text">Botón de Vida</span>
+                            <span class="vida-subtitle">Presiona para SOS o consultas</span>
+                        </div>
+                        <div class="vida-pulse"></div>
+                    </button>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="dosage">Dosis</label>
-                        <input type="text" id="dosage" placeholder="Ej: 400mg" required>
+            </div>
+        </section>
+
+        <!-- Sección de Cards/Cajones -->
+        <section class="cards-section">
+            <div class="cards-container">
+                <!-- Card: Medicamentos -->
+                <div class="card medicamentos-card">
+                    <div class="card-header">
+                        <i class="fas fa-pills card-icon"></i>
+                        <h3>Mis Medicamentos</h3>
                     </div>
-                    <div class="form-group">
-                        <label for="frequency">Frecuencia</label>
-                        <select id="frequency" required>
-                            <option value="">Seleccionar</option>
-                            <option value="Cada 4 horas">Cada 4 horas</option>
-                            <option value="Cada 6 horas">Cada 6 horas</option>
-                            <option value="Cada 8 horas">Cada 8 horas</option>
-                            <option value="Cada 12 horas">Cada 12 horas</option>
-                            <option value="Cada 24 horas">Cada 24 horas</option>
-                            <option value="Según necesidad">Según necesidad</option>
-                        </select>
+                    <div class="card-body">
+                        <p>Gestiona tu inventario de medicamentos</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-box"></i> 8 Activos</span>
+                            <span class="stat"><i class="fas fa-exclamation-triangle"></i> 2 Por agotar</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Ver Todos</button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="instructions">Instrucciones</label>
-                    <textarea id="instructions" rows="3" placeholder="Instrucciones adicionales..."></textarea>
-                </div>
-                <button type="submit" class="submit-button">Agregar Medicamento</button>
-            </form>
-        </div>
-        <div class="medication-list">
-            <h3>Medicamentos Registrados</h3>
-            <div id="medicationGrid" class="medication-grid"></div>
-        </div>
-    </section>
 
-    <!-- Sección de Recordatorios -->
-    <section id="recordatorios" class="reminders-section">
-        <h2>Recordatorios de Medicamentos</h2>
-        <div class="reminders-form-container">
-            <form id="reminderForm">
-                <div class="form-group">
-                    <label for="reminderMedication">Medicamento</label>
-                    <input type="text" id="reminderMedication" placeholder="Nombre del medicamento" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="reminderDate">Fecha</label>
-                        <input type="date" id="reminderDate" required>
+                <!-- Card: Recordatorios -->
+                <div class="card recordatorios-card">
+                    <div class="card-header">
+                        <i class="fas fa-bell card-icon"></i>
+                        <h3>Recordatorios</h3>
                     </div>
-                    <div class="form-group">
-                        <label for="reminderTime">Hora</label>
-                        <input type="time" id="reminderTime" required>
+                    <div class="card-body">
+                        <p>Próximas dosis programadas</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-clock"></i> Próximo: 14:30</span>
+                            <span class="stat"><i class="fas fa-calendar"></i> Hoy: 3 dosis</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Configurar</button>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="reminderNote">Nota</label>
-                    <textarea id="reminderNote" rows="3" placeholder="Notas adicionales (opcional)"></textarea>
+
+                <!-- Card: Historial Médico -->
+                <div class="card historial-card">
+                    <div class="card-header">
+                        <i class="fas fa-history card-icon"></i>
+                        <h3>Historial Médico</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Registro de tomas y tratamientos</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-check-circle"></i> 95% Adherencia</span>
+                            <span class="stat"><i class="fas fa-chart-line"></i> 30 días</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Ver Historial</button>
+                    </div>
                 </div>
-                <button type="submit" class="submit-button">Crear Recordatorio</button>
-            </form>
-        </div>
-        <div class="reminders-list">
-            <h3>Recordatorios Activos</h3>
-            <div class="table-container">
-                <table id="remindersTable" class="reminders-table">
-                    <thead>
-                        <tr>
-                            <th>Medicamento</th>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Nota</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="remindersTableBody">
-                        <!-- Los recordatorios se cargarán dinámicamente aquí -->
-                    </tbody>
-                </table>
+
+                <!-- Card: Emergencias -->
+                <div class="card emergencias-card">
+                    <div class="card-header">
+                        <i class="fas fa-ambulance card-icon"></i>
+                        <h3>Emergencias</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Contactos y procedimientos de emergencia</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-phone"></i> SOS: 911</span>
+                            <span class="stat"><i class="fas fa-user-md"></i> Dr. García</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Contactar</button>
+                    </div>
+                </div>
+
+                <!-- Card: Configuración -->
+                <div class="card configuracion-card">
+                    <div class="card-header">
+                        <i class="fas fa-cogs card-icon"></i>
+                        <h3>Configuración</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Personaliza tu experiencia</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-user"></i> Perfil</span>
+                            <span class="stat"><i class="fas fa-shield-alt"></i> Privacidad</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Ajustes</button>
+                    </div>
+                </div>
+
+                <!-- Card: Análisis y Reportes -->
+                <div class="card reportes-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar card-icon"></i>
+                        <h3>Análisis</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Estadísticas y tendencias de salud</p>
+                        <div class="card-stats">
+                            <span class="stat"><i class="fas fa-trending-up"></i> Mejorando</span>
+                            <span class="stat"><i class="fas fa-download"></i> Exportar</span>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="card-btn">Ver Reportes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para SOS y Consultas por Voz -->
+    <div id="sosModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-microphone"></i> Asistente de Voz</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="voice-interface">
+                    <div class="voice-status" id="voiceStatus">
+                        <i class="fas fa-microphone-slash"></i>
+                        <p>Presiona el botón para hablar</p>
+                    </div>
+                    <div class="voice-controls">
+                        <button class="voice-btn start" id="startListening">
+                            <i class="fas fa-microphone"></i>
+                            Iniciar Grabación
+                        </button>
+                        <button class="voice-btn stop" id="stopListening" style="display:none;">
+                            <i class="fas fa-stop"></i>
+                            Detener
+                        </button>
+                    </div>
+                    <div class="voice-transcript" id="voiceTranscript">
+                        <p>El texto de tu consulta aparecerá aquí...</p>
+                    </div>
+                    <div class="emergency-buttons">
+                        <button class="emergency-btn" id="sosButton">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            EMERGENCIA SOS
+                        </button>
+                        <button class="consultation-btn" id="consultationButton">
+                            <i class="fas fa-question-circle"></i>
+                            Consulta Medicamentos
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Sección de Historial -->
-    <section id="historial" class="history-section">
-        <h2>Historial de Medicación</h2>
-        <div class="history-filters">
-            <select id="historyFilter">
-                <option value="all">Todos</option>
-                <option value="week">Última semana</option>
-                <option value="month">Último mes</option>
-            </select>
-        </div>
-        <div id="historyGrid" class="history-grid"></div>
-    </section>
-
-    <!-- Sección de Contacto -->
-    <section id="contacto" class="contact-section">
-        <h2>Contáctanos</h2>
-        <div class="contact-content">
-            <div class="contact-info">
-                <h3>Información de Contacto</h3>
-                <p>📧 Email: info@pastillerodigital.com</p>
-                <p>📱 Teléfono: +1 (555) 123-4567</p>
-                <p>📍 Dirección: Calle Principal 123, Ciudad</p>
-            </div>
-            <form id="contactForm" class="contact-form">
-                <div class="form-group">
-                    <label for="contactName">Nombre</label>
-                    <input type="text" id="contactName" placeholder="Tu nombre" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactEmail">Email</label>
-                    <input type="email" id="contactEmail" placeholder="tu@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="contactMessage">Mensaje</label>
-                    <textarea id="contactMessage" rows="5" placeholder="Tu mensaje..." required></textarea>
-                </div>
-                <button type="submit" class="submit-button">Enviar Mensaje</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 El Pastillero Digital. Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="#">Privacidad</a>
-                <a href="#">Términos</a>
-                <a href="#">Ayuda</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Notificación Toast -->
-    <div id="notification" class="notification"></div>
-
-    <script src="js/app.js"></script>
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/voice-assistant.js"></script>
 </body>
 </html>
