@@ -83,13 +83,61 @@
     <section id="medicamentos" class="medications-section">
         <div class="container">
             <h2>Mis Medicamentos</h2>
-            <div class="medications-controls">
-                <button class="btn-primary" id="addMedication">Agregar Medicamento</button>
-                <input type="search" placeholder="Buscar medicamento..." class="search-input" id="searchMedication">
+            
+            <!-- Formulario para agregar medicamentos -->
+            <div class="medication-form-container" id="medicationFormContainer">
+                <h3>Agregar Nuevo Medicamento</h3>
+                <form id="medicationForm" class="medication-form">
+                    <div class="form-group">
+                        <label for="medicationName">Nombre del Medicamento:</label>
+                        <input type="text" id="medicationName" name="nombre" placeholder="Ej: Ibuprofeno" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicationDose">Dosis:</label>
+                        <input type="text" id="medicationDose" name="dosis" placeholder="Ej: 400mg" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicationFrequency">Frecuencia:</label>
+                        <input type="text" id="medicationFrequency" name="frecuencia" placeholder="Ej: Cada 8 horas" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="medicationNotes">Observaciones:</label>
+                        <textarea id="medicationNotes" name="observaciones" placeholder="Notas adicionales (opcional)" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Guardar Medicamento</button>
+                        <button type="reset" class="btn-secondary">Limpiar Formulario</button>
+                    </div>
+                </form>
             </div>
-            <div class="medications-list" id="medicationsList">
-                <!-- Los medicamentos se cargarán dinámicamente aquí -->
-                <p class="empty-state">No hay medicamentos registrados. Comienza agregando tu primer medicamento.</p>
+
+            <!-- Tabla dinámica de medicamentos -->
+            <div class="medications-table-container">
+                <h3>Lista de Medicamentos</h3>
+                <div class="medications-controls">
+                    <input type="search" class="search-input" id="searchMedication" placeholder="Buscar medicamento...">
+                </div>
+                
+                <table id="medicationsTable" class="medications-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Dosis</th>
+                            <th>Frecuencia</th>
+                            <th>Observaciones</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="medicationsTableBody">
+                        <!-- Los medicamentos se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
+                
+                <p id="emptyState" class="empty-state" style="display: none;">No hay medicamentos registrados. Comienza agregando tu primer medicamento.</p>
             </div>
         </div>
     </section>
@@ -111,7 +159,7 @@
         <div class="container">
             <h2>Historial de Tratamientos</h2>
             <div class="history-filters">
-                <select id="timeFilter" class="filter-select">
+                <select class="filter-select" id="timeFilter">
                     <option value="week">Última semana</option>
                     <option value="month" selected>Último mes</option>
                     <option value="year">Último año</option>
@@ -142,9 +190,9 @@
                 </div>
                 <form class="contact-form" id="contactForm">
                     <h3>Envíanos un mensaje</h3>
-                    <input type="text" placeholder="Nombre" required class="form-input">
-                    <input type="email" placeholder="Email" required class="form-input">
-                    <textarea placeholder="Mensaje" rows="5" required class="form-textarea"></textarea>
+                    <input type="text" class="form-input" placeholder="Nombre" required>
+                    <input type="email" class="form-input" placeholder="Email" required>
+                    <textarea class="form-textarea" placeholder="Mensaje" rows="5" required></textarea>
                     <button type="submit" class="btn-primary">Enviar Mensaje</button>
                 </form>
             </div>
@@ -176,12 +224,13 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 El Pastillero Digital. Todos los derechos reservados.</p>
+                <p>© 2025 El Pastillero Digital. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="js/scripts.js"></script>
+    <script src="js/medications.js"></script>
 </body>
 </html>
