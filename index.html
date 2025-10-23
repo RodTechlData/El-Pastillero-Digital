@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar">
             <div class="logo">
-                <h1>El Pastillero Digital</h1>
+                <h1>🏥 El Pastillero Digital</h1>
             </div>
             <ul class="nav-menu">
                 <li><a href="#inicio" class="nav-link">Inicio</a></li>
@@ -34,203 +34,181 @@
     <section id="inicio" class="hero-section">
         <div class="hero-content">
             <h2>Bienvenido a El Pastillero Digital</h2>
-            <p class="hero-subtitle">Tu asistente inteligente para la gestión de medicamentos</p>
-            <p>Sistema completo para controlar tus medicamentos, establecer recordatorios y mantener un historial detallado de tu salud.</p>
-            <button class="cta-button">Comenzar Ahora</button>
+            <p>Tu asistente inteligente para gestionar medicamentos de forma segura y eficiente</p>
+            <a href="#medicamentos" class="cta-button">Comenzar Ahora</a>
         </div>
     </section>
 
     <!-- Sección de Funcionalidades -->
     <section id="funcionalidades" class="features-section">
-        <div class="container">
-            <h2>Funcionalidades Principales</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="icon">💊</div>
-                    <h3>Gestión de Medicamentos</h3>
-                    <p>Organiza todos tus medicamentos con información detallada: dosis, frecuencia, y efectos.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">⏰</div>
-                    <h3>Recordatorios Inteligentes</h3>
-                    <p>Configura alertas personalizadas para nunca olvidar tomar tus medicamentos a tiempo.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">📊</div>
-                    <h3>Historial Médico</h3>
-                    <p>Lleva un registro completo de tus tratamientos y compártelo con profesionales de salud.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🔔</div>
-                    <h3>Notificaciones Push</h3>
-                    <p>Recibe notificaciones en tu dispositivo para mantenerte al día con tu tratamiento.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">📱</div>
-                    <h3>Multiplataforma</h3>
-                    <p>Accede desde cualquier dispositivo: móvil, tablet o computadora.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="icon">🔒</div>
-                    <h3>Seguridad Garantizada</h3>
-                    <p>Tus datos médicos están protegidos con encriptación de nivel empresarial.</p>
-                </div>
+        <h2>Funcionalidades Principales</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>Gestión de Medicamentos</h3>
+                <p>Registra y organiza todos tus medicamentos con información detallada sobre dosis y frecuencia.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Recordatorios Inteligentes</h3>
+                <p>Recibe notificaciones oportunas para nunca olvidar tomar tus medicamentos.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Historial Completo</h3>
+                <p>Lleva un registro detallado de tu tratamiento y comparte información con profesionales.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3>Seguridad y Privacidad</h3>
+                <p>Tus datos permanecen seguros y privados en tu dispositivo local.</p>
             </div>
         </div>
     </section>
 
     <!-- Sección de Medicamentos -->
-    <section id="medicamentos" class="medications-section">
-        <div class="container">
-            <h2>Mis Medicamentos</h2>
-            
-            <!-- Formulario para agregar medicamentos -->
-            <div class="medication-form-container" id="medicationFormContainer">
-                <h3>Agregar Nuevo Medicamento</h3>
-                <form id="medicationForm" class="medication-form">
-                    <div class="form-group">
-                        <label for="medicationName">Nombre del Medicamento:</label>
-                        <input type="text" id="medicationName" name="nombre" placeholder="Ej: Ibuprofeno" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="medicationDose">Dosis:</label>
-                        <input type="text" id="medicationDose" name="dosis" placeholder="Ej: 400mg" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="medicationFrequency">Frecuencia:</label>
-                        <input type="text" id="medicationFrequency" name="frecuencia" placeholder="Ej: Cada 8 horas" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="medicationNotes">Observaciones:</label>
-                        <textarea id="medicationNotes" name="observaciones" placeholder="Notas adicionales (opcional)" rows="3"></textarea>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary">Guardar Medicamento</button>
-                        <button type="reset" class="btn-secondary">Limpiar Formulario</button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Tabla dinámica de medicamentos -->
-            <div class="medications-table-container">
-                <h3>Lista de Medicamentos</h3>
-                <div class="medications-controls">
-                    <input type="search" class="search-input" id="searchMedication" placeholder="Buscar medicamento...">
+    <section id="medicamentos" class="medication-section">
+        <h2>Gestión de Medicamentos</h2>
+        <div class="medication-form-container">
+            <form id="medicationForm">
+                <div class="form-group">
+                    <label for="medicationName">Nombre del Medicamento</label>
+                    <input type="text" id="medicationName" placeholder="Ej: Ibuprofeno" required>
                 </div>
-                
-                <table id="medicationsTable" class="medications-table">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Dosis</th>
-                            <th>Frecuencia</th>
-                            <th>Observaciones</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody id="medicationsTableBody">
-                        <!-- Los medicamentos se cargarán dinámicamente aquí -->
-                    </tbody>
-                </table>
-                
-                <p id="emptyState" class="empty-state" style="display: none;">No hay medicamentos registrados. Comienza agregando tu primer medicamento.</p>
-            </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dosage">Dosis</label>
+                        <input type="text" id="dosage" placeholder="Ej: 400mg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="frequency">Frecuencia</label>
+                        <select id="frequency" required>
+                            <option value="">Seleccionar</option>
+                            <option value="Cada 4 horas">Cada 4 horas</option>
+                            <option value="Cada 6 horas">Cada 6 horas</option>
+                            <option value="Cada 8 horas">Cada 8 horas</option>
+                            <option value="Cada 12 horas">Cada 12 horas</option>
+                            <option value="Cada 24 horas">Cada 24 horas</option>
+                            <option value="Según necesidad">Según necesidad</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="instructions">Instrucciones</label>
+                    <textarea id="instructions" rows="3" placeholder="Instrucciones adicionales..."></textarea>
+                </div>
+                <button type="submit" class="submit-button">Agregar Medicamento</button>
+            </form>
+        </div>
+        <div class="medication-list">
+            <h3>Medicamentos Registrados</h3>
+            <div id="medicationGrid" class="medication-grid"></div>
         </div>
     </section>
 
     <!-- Sección de Recordatorios -->
     <section id="recordatorios" class="reminders-section">
-        <div class="container">
-            <h2>Recordatorios Activos</h2>
-            <div class="reminders-grid" id="remindersList">
-                <!-- Los recordatorios se cargarán dinámicamente aquí -->
-                <p class="empty-state">No hay recordatorios configurados. Crea uno para mantener tu tratamiento al día.</p>
+        <h2>Recordatorios de Medicamentos</h2>
+        <div class="reminders-form-container">
+            <form id="reminderForm">
+                <div class="form-group">
+                    <label for="reminderMedication">Medicamento</label>
+                    <input type="text" id="reminderMedication" placeholder="Nombre del medicamento" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="reminderDate">Fecha</label>
+                        <input type="date" id="reminderDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reminderTime">Hora</label>
+                        <input type="time" id="reminderTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reminderNote">Nota</label>
+                    <textarea id="reminderNote" rows="3" placeholder="Notas adicionales (opcional)"></textarea>
+                </div>
+                <button type="submit" class="submit-button">Crear Recordatorio</button>
+            </form>
+        </div>
+        <div class="reminders-list">
+            <h3>Recordatorios Activos</h3>
+            <div class="table-container">
+                <table id="remindersTable" class="reminders-table">
+                    <thead>
+                        <tr>
+                            <th>Medicamento</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Nota</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="remindersTableBody">
+                        <!-- Los recordatorios se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
             </div>
-            <button class="btn-secondary" id="addReminder">Crear Recordatorio</button>
         </div>
     </section>
 
     <!-- Sección de Historial -->
     <section id="historial" class="history-section">
-        <div class="container">
-            <h2>Historial de Tratamientos</h2>
-            <div class="history-filters">
-                <select class="filter-select" id="timeFilter">
-                    <option value="week">Última semana</option>
-                    <option value="month" selected>Último mes</option>
-                    <option value="year">Último año</option>
-                    <option value="all">Todo el historial</option>
-                </select>
-                <button class="btn-export" id="exportHistory">Exportar PDF</button>
-            </div>
-            <div class="history-timeline" id="historyTimeline">
-                <!-- El historial se cargará dinámicamente aquí -->
-                <p class="empty-state">El historial aparecerá cuando comiences a registrar tus medicamentos.</p>
-            </div>
+        <h2>Historial de Medicación</h2>
+        <div class="history-filters">
+            <select id="historyFilter">
+                <option value="all">Todos</option>
+                <option value="week">Última semana</option>
+                <option value="month">Último mes</option>
+            </select>
         </div>
+        <div id="historyGrid" class="history-grid"></div>
     </section>
 
     <!-- Sección de Contacto -->
     <section id="contacto" class="contact-section">
-        <div class="container">
-            <h2>Contacto y Soporte</h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>¿Necesitas ayuda?</h3>
-                    <p>Nuestro equipo está disponible para asistirte con cualquier consulta sobre El Pastillero Digital.</p>
-                    <ul class="contact-list">
-                        <li>📧 Email: soporte@pastillerodigital.com</li>
-                        <li>📞 Teléfono: +54 11 1234-5678</li>
-                        <li>💬 Chat en vivo: Lunes a Viernes 9:00-18:00</li>
-                    </ul>
-                </div>
-                <form class="contact-form" id="contactForm">
-                    <h3>Envíanos un mensaje</h3>
-                    <input type="text" class="form-input" placeholder="Nombre" required>
-                    <input type="email" class="form-input" placeholder="Email" required>
-                    <textarea class="form-textarea" placeholder="Mensaje" rows="5" required></textarea>
-                    <button type="submit" class="btn-primary">Enviar Mensaje</button>
-                </form>
+        <h2>Contáctanos</h2>
+        <div class="contact-content">
+            <div class="contact-info">
+                <h3>Información de Contacto</h3>
+                <p>📧 Email: info@pastillerodigital.com</p>
+                <p>📱 Teléfono: +1 (555) 123-4567</p>
+                <p>📍 Dirección: Calle Principal 123, Ciudad</p>
             </div>
+            <form id="contactForm" class="contact-form">
+                <div class="form-group">
+                    <label for="contactName">Nombre</label>
+                    <input type="text" id="contactName" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactEmail">Email</label>
+                    <input type="email" id="contactEmail" placeholder="tu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactMessage">Mensaje</label>
+                    <textarea id="contactMessage" rows="5" placeholder="Tu mensaje..." required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Enviar Mensaje</button>
+            </form>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>El Pastillero Digital</h4>
-                    <p>Tu salud, nuestra prioridad</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#funcionalidades">Funcionalidades</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#privacidad">Política de Privacidad</a></li>
-                        <li><a href="#terminos">Términos de Uso</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 El Pastillero Digital. Todos los derechos reservados.</p>
+        <div class="footer-content">
+            <p>&copy; 2024 El Pastillero Digital. Todos los derechos reservados.</p>
+            <div class="footer-links">
+                <a href="#">Privacidad</a>
+                <a href="#">Términos</a>
+                <a href="#">Ayuda</a>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="js/scripts.js"></script>
-    <script src="js/medications.js"></script>
+    <!-- Notificación Toast -->
+    <div id="notification" class="notification"></div>
+
+    <script src="js/app.js"></script>
 </body>
 </html>
