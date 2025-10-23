@@ -1,334 +1,140 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>El Pastillero Digital - Sistema de Gestión de Salud</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    :root{ --bg:#05060a; --bg-elev:#0a0c12; --text:#e6f7ff; --muted:#88a3ad; --cyan:#00e5ff; --cyan-2:#00bcd4; --green:#31ff8b; --danger:#ff4d6d; --card-glow: 0 0 20px rgba(0,229,255,.25), 0 0 40px rgba(49,255,139,.15); --btn-glow: 0 0 12px rgba(0,229,255,.6); --radius:14px; --border:1px solid rgba(0,229,255,.18);} *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; background:radial-gradient(1200px 800px at 80% -10%, rgba(0,229,255,.08), transparent 60%), radial-gradient(1000px 700px at -10% 110%, rgba(49,255,139,.07), transparent 60%), var(--bg); color:var(--text); font:15px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+    .navbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 20px; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.25)); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,229,255,.12)}
+    .navbar-brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px}
+    .navbar-brand i{color:var(--cyan)}
+    .navbar-menu{display:flex; list-style:none; gap:8px; padding:0; margin:0}
+    .navbar-menu a{display:flex; align-items:center; gap:8px; padding:8px 12px; color:var(--text); text-decoration:none; border-radius:10px; border:1px solid transparent; transition:.25s ease}
+    .navbar-menu a:hover{border-color:rgba(0,229,255,.25); box-shadow: inset 0 0 0 1px rgba(0,229,255,.15), 0 0 12px rgba(0,229,255,.25)}
+    .navbar-menu a.active{color:var(--bg); background:linear-gradient(135deg, var(--cyan), var(--green)); box-shadow: var(--btn-glow)}
+    .container{max-width:1100px; margin:24px auto; padding:0 16px}
+    .page-title{font-size:26px; margin:4px 0 6px}
+    .page-subtitle{margin:0 0 20px; color:var(--muted)}
+    .cards-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px}
+    .dashboard-card{position:relative; background:linear-gradient(180deg, rgba(0,229,255,.05), rgba(49,255,139,.05)); border:var(--border); border-radius:var(--radius); padding:18px; display:flex; gap:14px; align-items:center; cursor:pointer; transition:.25s ease; overflow:hidden}
+    .dashboard-card::before{content:""; position:absolute; inset:-1px; border-radius:inherit; background: conic-gradient(from 180deg at 50% 50%, rgba(0,229,255,.25), rgba(49,255,139,.25), rgba(0,229,255,.25)); filter: blur(24px); opacity:.15; pointer-events:none}
+    .dashboard-card:hover{transform: translateY(-2px); box-shadow: var(--card-glow)}
+    .card-icon{width:46px; height:46px; display:grid; place-items:center; color:var(--cyan); background:rgba(0,229,255,.12); border:1px solid rgba(0,229,255,.25); border-radius:12px; box-shadow: inset 0 0 18px rgba(0,229,255,.15)}
+    .card-content{flex:1}
+    .card-number{font-size:28px; font-weight:800; margin:2px 0; color:var(--green)}
+    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:10px 0 18px}
+    .btn{border-radius:12px; padding:10px 14px; border:1px solid rgba(0,229,255,.28); background: rgba(0,229,255,.12); color:var(--text); cursor:pointer; transition:.25s ease; box-shadow: inset 0 0 0 1px rgba(0,229,255,.12)}
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 0 14px rgba(0,229,255,.35)}
+    .btn-primary{background: linear-gradient(135deg, rgba(0,229,255,.25), rgba(49,255,139,.25)); border-color: rgba(0,229,255,.35)}
+    .btn-danger{background: rgba(255,77,109,.15); border-color: rgba(255,77,109,.4)}
+    .search-input{flex:1 1 260px; min-width:200px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,229,255,.25); background: rgba(5,6,10,.6); color:var(--text); outline:none; transition:.2s}
+    .search-input:focus{box-shadow: 0 0 0 3px rgba(0,229,255,.25)}
+    .pacientes-lista{display:grid; gap:10px}
+    .paciente-item{background: var(--bg-elev); border: var(--border); border-radius: 12px; padding:12px; display:grid; grid-template-columns: 1fr auto; gap:12px}
+    .paciente-name{font-weight:700}
+    .paciente-actions{display:flex; gap:8px}
+    .modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.6)}
+    .modal[hidden]{display:none}
+    .modal-content{width:min(680px, 92vw); background:linear-gradient(180deg, rgba(0,229,255,.05), rgba(49,255,139,.05)); border:var(--border); border-radius:16px; padding:18px; box-shadow: var(--card-glow)}
+    .modal-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
+    .close{background: transparent; border:1px solid rgba(0,229,255,.35); color:var(--text); border-radius:10px; padding:6px 8px; cursor:pointer}
+    .page[hidden]{display:none}
+  </style>
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-brand">
       <i class="fa-solid fa-capsules"></i>
       <span>El Pastillero Digital</span>
     </div>
     <ul class="navbar-menu">
-      <li><a href="#/" data-route="home"><i class="fa-solid fa-house"></i> Inicio</a></li>
-      <li><a href="#/pacientes" data-route="pacientes"><i class="fa-solid fa-users"></i> Pacientes</a></li>
+      <li><a href="#/" data-route="home" id="link-home"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="#/pacientes" data-route="pacientes" id="link-pacientes"><i class="fa-solid fa-users"></i> Pacientes</a></li>
     </ul>
   </nav>
 
-  <!-- Main Container -->
   <main id="app-main" class="container">
-    <!-- Dashboard / Home Section -->
     <section id="home-section" class="page">
       <h1 class="page-title">Panel Principal</h1>
       <p class="page-subtitle">Accede a pacientes, signos vitales y medicación</p>
-      <div class="cards-grid" id="cards-grid">
-        <!-- Cards will be dynamically generated -->
-      </div>
+      <div class="cards-grid" id="cards-grid"></div>
     </section>
 
-    <!-- Pacientes Section -->
     <section id="pacientes-section" class="page" hidden>
       <h1 class="page-title">Gestión de Pacientes</h1>
       <div id="pacientes-toolbar" class="toolbar">
-        <button id="btn-nuevo-paciente" class="btn btn-primary">
-          <i class="fa fa-user-plus"></i> Nuevo Paciente
-        </button>
-        <input id="buscar-paciente" type="search" placeholder="Buscar paciente..." class="search-input">
+        <button id="btn-nuevo-paciente" class="btn btn-primary"><i class="fa fa-user-plus"></i> Nuevo Paciente</button>
+        <input id="buscar-paciente" type="search" placeholder="Buscar paciente..." class="search-input" />
       </div>
-      <div id="pacientes-lista" class="pacientes-lista">
-        <!-- Patient list will be dynamically generated -->
-      </div>
+      <div id="pacientes-lista" class="pacientes-lista"></div>
     </section>
   </main>
 
-  <!-- Modal for Add/Edit Patient -->
   <div id="modal-paciente" class="modal" hidden>
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modal-title">Nuevo Paciente</h2>
-        <button id="btn-cerrar-modal" class="btn-close">
-          <i class="fa fa-times"></i>
-        </button>
+        <h3 id="modal-title">Nuevo Paciente</h3>
+        <button class="close" id="modal-close">Cerrar</button>
       </div>
-      <form id="form-paciente" class="modal-body">
-        <div class="form-group">
-          <label for="nombre">Nombre Completo</label>
-          <input type="text" id="nombre" name="nombre" required>
+      <form id="form-paciente">
+        <div class="toolbar" style="margin:0 0 8px 0; padding:0">
+          <input required id="inp-nombre" class="search-input" placeholder="Nombre y apellido" />
+          <input id="inp-edad" class="search-input" placeholder="Edad" type="number" min="0" style="max-width:140px" />
+          <input id="inp-doc" class="search-input" placeholder="Documento" style="max-width:180px" />
         </div>
-        <div class="form-group">
-          <label for="edad">Edad</label>
-          <input type="number" id="edad" name="edad" min="0" max="120" required>
-        </div>
-        <div class="form-group">
-          <label for="dni">DNI/Identificación</label>
-          <input type="text" id="dni" name="dni" required>
-        </div>
-        <div class="form-group">
-          <label for="diagnostico">Diagnóstico</label>
-          <textarea id="diagnostico" name="diagnostico" rows="3"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="btn-cancelar" class="btn btn-secondary">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
+        <div class="paciente-actions">
+          <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
+          <button type="button" class="btn" id="modal-cancel">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- JavaScript SPA Logic -->
   <script>
-    // Secure SPA Router
-    const router = {
-      currentRoute: 'home',
-      routes: {
-        'home': 'home-section',
-        'pacientes': 'pacientes-section'
-      },
-      navigate(route) {
-        // Hide all sections
-        Object.values(this.routes).forEach(sectionId => {
-          const section = document.getElementById(sectionId);
-          if (section) section.hidden = true;
-        });
-        
-        // Show target section
-        const targetSection = document.getElementById(this.routes[route] || this.routes['home']);
-        if (targetSection) {
-          targetSection.hidden = false;
-          this.currentRoute = route;
-        }
-      },
-      init() {
-        // Handle hash changes
-        window.addEventListener('hashchange', () => {
-          const hash = window.location.hash.slice(2) || 'home';
-          this.navigate(hash);
-        });
-        
-        // Initial route
-        const initialHash = window.location.hash.slice(2) || 'home';
-        this.navigate(initialHash);
-      }
-    };
+    const router = { routes: {'':'home', '#/':'home', '#/pacientes':'pacientes'}, go(hash){ window.location.hash = hash; }, update(){ const hash = window.location.hash || '#/'; const page = this.routes[hash] || 'home'; document.getElementById('home-section').hidden = page !== 'home'; document.getElementById('pacientes-section').hidden = page !== 'pacientes'; document.getElementById('link-home').classList.toggle('active', page==='home'); document.getElementById('link-pacientes').classList.toggle('active', page==='pacientes'); }, init(){ window.addEventListener('hashchange', ()=> this.update()); this.update(); } };
 
-    // Patient Management
     const patientManager = {
-      patients: [],
-      currentPatientId: null,
-      
-      init() {
-        this.loadPatients();
-        this.bindEvents();
-        this.renderPatientList();
-        this.renderDashboardCards();
-      },
-      
-      loadPatients() {
-        const stored = localStorage.getItem('pacientes');
-        this.patients = stored ? JSON.parse(stored) : [];
-      },
-      
-      savePatients() {
-        localStorage.setItem('pacientes', JSON.stringify(this.patients));
-      },
-      
-      bindEvents() {
-        // Open modal for new patient
-        document.getElementById('btn-nuevo-paciente').addEventListener('click', () => {
-          this.openModal();
-        });
-        
-        // Close modal
-        document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
-          this.closeModal();
-        });
-        
-        document.getElementById('btn-cancelar').addEventListener('click', () => {
-          this.closeModal();
-        });
-        
-        // Form submit
-        document.getElementById('form-paciente').addEventListener('submit', (e) => {
-          e.preventDefault();
-          this.savePatient();
-        });
-        
-        // Search functionality
-        document.getElementById('buscar-paciente').addEventListener('input', (e) => {
-          this.filterPatients(e.target.value);
-        });
-      },
-      
-      openModal(patient = null) {
-        const modal = document.getElementById('modal-paciente');
-        const modalTitle = document.getElementById('modal-title');
-        const form = document.getElementById('form-paciente');
-        
-        form.reset();
-        
-        if (patient) {
-          modalTitle.textContent = 'Editar Paciente';
-          this.currentPatientId = patient.id;
-          document.getElementById('nombre').value = patient.nombre;
-          document.getElementById('edad').value = patient.edad;
-          document.getElementById('dni').value = patient.dni;
-          document.getElementById('diagnostico').value = patient.diagnostico || '';
-        } else {
-          modalTitle.textContent = 'Nuevo Paciente';
-          this.currentPatientId = null;
-        }
-        
-        modal.hidden = false;
-      },
-      
-      closeModal() {
-        const modal = document.getElementById('modal-paciente');
-        modal.hidden = true;
-        this.currentPatientId = null;
-      },
-      
-      savePatient() {
-        const nombre = document.getElementById('nombre').value.trim();
-        const edad = document.getElementById('edad').value;
-        const dni = document.getElementById('dni').value.trim();
-        const diagnostico = document.getElementById('diagnostico').value.trim();
-        
-        if (this.currentPatientId) {
-          // Edit existing patient
-          const index = this.patients.findIndex(p => p.id === this.currentPatientId);
-          if (index !== -1) {
-            this.patients[index] = {
-              ...this.patients[index],
-              nombre,
-              edad: parseInt(edad),
-              dni,
-              diagnostico
-            };
-          }
-        } else {
-          // Add new patient
-          const newPatient = {
-            id: Date.now(),
-            nombre,
-            edad: parseInt(edad),
-            dni,
-            diagnostico,
-            fechaRegistro: new Date().toISOString()
-          };
-          this.patients.push(newPatient);
-        }
-        
-        this.savePatients();
-        this.renderPatientList();
-        this.renderDashboardCards();
-        this.closeModal();
-      },
-      
-      deletePatient(id) {
-        if (confirm('¿Está seguro de eliminar este paciente?')) {
-          this.patients = this.patients.filter(p => p.id !== id);
-          this.savePatients();
-          this.renderPatientList();
-          this.renderDashboardCards();
-        }
-      },
-      
-      filterPatients(searchTerm) {
-        const term = searchTerm.toLowerCase();
-        const filtered = this.patients.filter(p => 
-          p.nombre.toLowerCase().includes(term) ||
-          p.dni.includes(term)
-        );
-        this.renderPatientList(filtered);
-      },
-      
-      renderPatientList(patients = this.patients) {
-        const lista = document.getElementById('pacientes-lista');
-        
-        if (patients.length === 0) {
-          lista.innerHTML = '<p class="empty-state">No hay pacientes registrados</p>';
-          return;
-        }
-        
-        lista.innerHTML = patients.map(patient => `
-          <div class="patient-card" data-id="${patient.id}">
-            <div class="patient-info">
-              <h3>${this.escapeHtml(patient.nombre)}</h3>
-              <p><strong>DNI:</strong> ${this.escapeHtml(patient.dni)}</p>
-              <p><strong>Edad:</strong> ${patient.edad} años</p>
-              ${patient.diagnostico ? `<p><strong>Diagnóstico:</strong> ${this.escapeHtml(patient.diagnostico)}</p>` : ''}
-            </div>
-            <div class="patient-actions">
-              <button class="btn btn-icon btn-edit" data-id="${patient.id}">
-                <i class="fa fa-edit"></i>
-              </button>
-              <button class="btn btn-icon btn-delete" data-id="${patient.id}">
-                <i class="fa fa-trash"></i>
-              </button>
-            </div>
+      patients: [
+        {id:1, nombre:'Ana Pérez', edad:31, documento:'DNI 32.111.222'},
+        {id:2, nombre:'Carlos López', edad:65, documento:'DNI 12.345.678'},
+        {id:3, nombre:'María Gómez', edad:49, documento:'DNI 21.987.654'}
+      ], uid:4, editingId:null,
+      init(){ this.renderDashboardCards(); this.renderList(); document.getElementById('btn-nuevo-paciente').addEventListener('click',()=> this.openModal()); document.getElementById('buscar-paciente').addEventListener('input', (e)=> this.renderList(e.target.value)); document.getElementById('modal-close').addEventListener('click', ()=> this.closeModal()); document.getElementById('modal-cancel').addEventListener('click', ()=> this.closeModal()); document.getElementById('form-paciente').addEventListener('submit', (e)=>{ e.preventDefault(); this.saveFromModal(); }); },
+      renderList(filtro=''){ const lista = document.getElementById('pacientes-lista'); const q = (filtro||'').trim().toLowerCase(); const data = this.patients.filter(p => !q || p.nombre.toLowerCase().includes(q) || (p.documento||'').toLowerCase().includes(q)); lista.innerHTML = data.map(p=> `
+        <div class="paciente-item">
+          <div>
+            <div class="paciente-name">${this.escapeHtml(p.nombre)}</div>
+            <div class="page-subtitle">${p.edad??''} años · ${this.escapeHtml(p.documento||'')}</div>
           </div>
-        `).join('');
-        
-        // Bind edit and delete buttons
-        lista.querySelectorAll('.btn-edit').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const id = parseInt(e.currentTarget.dataset.id);
-            const patient = this.patients.find(p => p.id === id);
-            if (patient) this.openModal(patient);
-          });
-        });
-        
-        lista.querySelectorAll('.btn-delete').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            const id = parseInt(e.currentTarget.dataset.id);
-            this.deletePatient(id);
-          });
-        });
-      },
-      
-      renderDashboardCards() {
-        const grid = document.getElementById('cards-grid');
-        const totalPatients = this.patients.length;
-        
-        grid.innerHTML = `
-          <div class="dashboard-card">
-            <div class="card-icon">
-              <i class="fa-solid fa-users"></i>
-            </div>
-            <div class="card-content">
-              <h3>Total Pacientes</h3>
-              <p class="card-number">${totalPatients}</p>
-            </div>
+          <div class="paciente-actions">
+            <button class="btn" data-id="${p.id}"><i class="fa fa-pen"></i> Editar</button>
+            <button class="btn btn-danger btn-delete" data-id="${p.id}"><i class="fa fa-trash"></i> Eliminar</button>
           </div>
-          <div class="dashboard-card" onclick="window.location.hash = '#/pacientes'">
-            <div class="card-icon">
-              <i class="fa-solid fa-user-plus"></i>
-            </div>
-            <div class="card-content">
-              <h3>Gestionar Pacientes</h3>
-              <p>Ver, agregar y editar</p>
-            </div>
-          </div>
-        `;
-      },
-      
-      escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-      }
+        </div>`).join('');
+        lista.querySelectorAll('.btn:not(.btn-delete)').forEach(btn=>{ btn.addEventListener('click', (e)=>{ const id = parseInt(e.currentTarget.dataset.id); const patient = this.patients.find(p=> p.id===id); if (patient) this.openModal(patient); }); });
+        lista.querySelectorAll('.btn-delete').forEach(btn=>{ btn.addEventListener('click', (e)=>{ const id = parseInt(e.currentTarget.dataset.id); this.deletePatient(id); }); }); },
+      renderDashboardCards(){ const grid = document.getElementById('cards-grid'); const totalPatients = this.patients.length; grid.innerHTML = `
+        <div class="dashboard-card" onclick="window.location.hash = '#/pacientes'">
+          <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+          <div class="card-content">Total Pacientes<p class="card-number">${totalPatients}</p></div>
+        </div>
+        <div class="dashboard-card" onclick="window.location.hash = '#/pacientes'">
+          <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
+          <div class="card-content">Gestionar Pacientes<br/>Ver, agregar y editar</div>
+        </div>`; },
+      openModal(p=null){ document.getElementById('modal-title').textContent = p? 'Editar Paciente' : 'Nuevo Paciente'; document.getElementById('inp-nombre').value = p? p.nombre: ''; document.getElementById('inp-edad').value = p? (p.edad??'') : ''; document.getElementById('inp-doc').value = p? (p.documento||'') : ''; document.getElementById('modal-paciente').hidden = false; this.editingId = p? p.id : null; },
+      closeModal(){ document.getElementById('modal-paciente').hidden = true; this.clearModal(); },
+      clearModal(){ document.getElementById('form-paciente').reset(); },
+      saveFromModal(){ const nombre = (document.getElementById('inp-nombre').value||'').trim(); const edad = parseInt(document.getElementById('inp-edad').value||''); const documento = (document.getElementById('inp-doc').value||'').trim(); if(!nombre){ alert('Ingrese un nombre'); return; } if(this.editingId){ const idx = this.patients.findIndex(p=> p.id===this.editingId); if(idx>-1){ this.patients[idx] = { ...this.patients[idx], nombre, edad: isNaN(edad)? null: edad, documento } } } else { this.patients.push({ id:this.uid++, nombre, edad: isNaN(edad)? null: edad, documento }); } this.closeModal(); this.renderDashboardCards(); this.renderList(document.getElementById('buscar-paciente').value||''); },
+      deletePatient(id){ this.patients = this.patients.filter(p=> p.id!==id); this.renderDashboardCards(); this.renderList(document.getElementById('buscar-paciente').value||''); },
+      escapeHtml(text){ const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
     };
 
-    // Initialize app
-    document.addEventListener('DOMContentLoaded', () => {
-      router.init();
-      patientManager.init();
-    });
+    document.addEventListener('DOMContentLoaded', ()=>{ router.init(); patientManager.init(); });
   </script>
 </body>
 </html>
