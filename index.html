@@ -3,191 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Sistema de gestión de medicamentos - El Pastillero Digital">
-    <title>El Pastillero Digital - Gestión Inteligente de Medicamentos</title>
+    <title>El Pastillero Digital - Sistema de Gestión de Medicamentos</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Font Awesome para íconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navegación Horizontal -->
-    <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <!-- Logo -->
-                <div class="logo">
-                    <i class="fas fa-pills"></i>
-                    <span>El Pastillero Digital</span>
-                </div>
-                
-                <!-- Menú de navegación horizontal -->
-                <ul class="nav-menu">
-                    <li><a href="#inicio" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#medicamentos" class="nav-link"><i class="fas fa-capsules"></i> Medicamentos</a></li>
-                    <li><a href="#recordatorios" class="nav-link"><i class="fas fa-bell"></i> Recordatorios</a></li>
-                    <li><a href="#historial" class="nav-link"><i class="fas fa-history"></i> Historial</a></li>
-                    <li><a href="#contacto" class="nav-link"><i class="fas fa-phone"></i> Contacto</a></li>
-                </ul>
-                
-                <!-- Avatar de usuario -->
-                <div class="user-avatar">
-                    <img src="https://via.placeholder.com/40x40/4CAF50/ffffff?text=U" alt="Avatar Usuario" class="avatar-img">
-                    <span class="user-name">Usuario</span>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                
-                <!-- Botón hamburguesa para móviles -->
-                <button class="hamburger" id="hamburger">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </button>
+    <!-- Navegación horizontal profesional -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-brand">
+                <i class="fas fa-pills"></i>
+                <span>El Pastillero Digital</span>
             </div>
-        </nav>
-    </header>
+            <ul class="navbar-menu">
+                <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+                <li><a href="#medicamentos"><i class="fas fa-capsules"></i> Medicamentos</a></li>
+                <li><a href="#alarmas"><i class="fas fa-bell"></i> Alarmas</a></li>
+                <li><a href="#historial"><i class="fas fa-history"></i> Historial</a></li>
+                <li><a href="#reportes"><i class="fas fa-chart-line"></i> Reportes</a></li>
+            </ul>
+        </div>
+    </nav>
 
-    <!-- Contenido Principal -->
-    <main class="main-content">
-        <!-- Sección Hero con Botón de Vida Central -->
-        <section id="inicio" class="hero-section">
-            <div class="hero-container">
-                <h1 class="hero-title">Gestión Inteligente de Medicamentos</h1>
-                <p class="hero-subtitle">Tu salud en tus manos con tecnología avanzada</p>
-                
-                <!-- Botón de Vida Central -->
-                <div class="vida-button-container">
-                    <button class="vida-button" id="vidaButton">
-                        <div class="vida-button-inner">
-                            <i class="fas fa-microphone" id="micIcon"></i>
-                            <span class="vida-text">Botón de Vida</span>
-                            <span class="vida-subtitle">Presiona para SOS o consultas</span>
-                        </div>
-                        <div class="vida-pulse"></div>
-                    </button>
-                </div>
-            </div>
-        </section>
+    <!-- Sección Hero con Botón de Vida -->
+    <section class="hero-section" id="inicio">
+        <div class="hero-content">
+            <h1>Tu Salud, Siempre Contigo</h1>
+            <p>Sistema inteligente de gestión de medicamentos con asistencia por voz</p>
+            <button class="life-button" id="lifeButton" title="Botón de Vida - Presiona para asistencia por voz">
+                <i class="fas fa-microphone"></i>
+                <span class="life-button-text">Botón de Vida</span>
+                <span class="pulse-ring"></span>
+            </button>
+        </div>
+    </section>
 
-        <!-- Sección de Cards/Cajones -->
-        <section class="cards-section">
-            <div class="cards-container">
-                <!-- Card: Medicamentos -->
-                <div class="card medicamentos-card">
-                    <div class="card-header">
-                        <i class="fas fa-pills card-icon"></i>
-                        <h3>Mis Medicamentos</h3>
+    <!-- Sección de Cards de Navegación Estilo App -->
+    <section class="dashboard-section">
+        <div class="container">
+            <h2 class="section-title">Panel de Control</h2>
+            <div class="cards-grid">
+                <!-- Card 1: Agregar Medicamento -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-plus-circle"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Gestiona tu inventario de medicamentos</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-box"></i> 8 Activos</span>
-                            <span class="stat"><i class="fas fa-exclamation-triangle"></i> 2 Por agotar</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Agregar Medicamento</h3>
+                        <p class="card-description">Registra nuevos medicamentos con recordatorios personalizados</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Ver Todos</button>
+                        <button class="card-btn" onclick="location.href='#agregar'">Agregar Ahora</button>
                     </div>
                 </div>
 
-                <!-- Card: Recordatorios -->
-                <div class="card recordatorios-card">
-                    <div class="card-header">
-                        <i class="fas fa-bell card-icon"></i>
-                        <h3>Recordatorios</h3>
+                <!-- Card 2: Mis Medicamentos -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-list-ul"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Próximas dosis programadas</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-clock"></i> Próximo: 14:30</span>
-                            <span class="stat"><i class="fas fa-calendar"></i> Hoy: 3 dosis</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Mis Medicamentos</h3>
+                        <p class="card-description">Consulta y gestiona todos tus medicamentos registrados</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Configurar</button>
+                        <button class="card-btn" onclick="location.href='#lista'">Ver Lista</button>
                     </div>
                 </div>
 
-                <!-- Card: Historial Médico -->
-                <div class="card historial-card">
-                    <div class="card-header">
-                        <i class="fas fa-history card-icon"></i>
-                        <h3>Historial Médico</h3>
+                <!-- Card 3: Alarmas Activas -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Registro de tomas y tratamientos</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-check-circle"></i> 95% Adherencia</span>
-                            <span class="stat"><i class="fas fa-chart-line"></i> 30 días</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Alarmas Activas</h3>
+                        <p class="card-description">Configura y personaliza tus recordatorios de medicación</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Ver Historial</button>
+                        <button class="card-btn" onclick="location.href='#alarmas'">Configurar</button>
                     </div>
                 </div>
 
-                <!-- Card: Emergencias -->
-                <div class="card emergencias-card">
-                    <div class="card-header">
-                        <i class="fas fa-ambulance card-icon"></i>
-                        <h3>Emergencias</h3>
+                <!-- Card 4: Historial -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-history"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Contactos y procedimientos de emergencia</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-phone"></i> SOS: 911</span>
-                            <span class="stat"><i class="fas fa-user-md"></i> Dr. García</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Historial de Tomas</h3>
+                        <p class="card-description">Revisa tu historial completo de medicación</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Contactar</button>
+                        <button class="card-btn" onclick="location.href='#historial'">Ver Historial</button>
                     </div>
                 </div>
 
-                <!-- Card: Configuración -->
-                <div class="card configuracion-card">
-                    <div class="card-header">
-                        <i class="fas fa-cogs card-icon"></i>
-                        <h3>Configuración</h3>
+                <!-- Card 5: Reportes -->
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-file-medical-alt"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Personaliza tu experiencia</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-user"></i> Perfil</span>
-                            <span class="stat"><i class="fas fa-shield-alt"></i> Privacidad</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Reportes Médicos</h3>
+                        <p class="card-description">Genera reportes detallados para tu médico</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Ajustes</button>
+                        <button class="card-btn" onclick="location.href='#reportes'">Ver Reportes</button>
                     </div>
                 </div>
 
-                <!-- Card: Análisis y Reportes -->
-                <div class="card reportes-card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-bar card-icon"></i>
-                        <h3>Análisis</h3>
+                <!-- Card 6: Contacto SOS -->
+                <div class="card card-emergency">
+                    <div class="card-icon">
+                        <i class="fas fa-phone-volume"></i>
                     </div>
-                    <div class="card-body">
-                        <p>Estadísticas y tendencias de salud</p>
-                        <div class="card-stats">
-                            <span class="stat"><i class="fas fa-trending-up"></i> Mejorando</span>
-                            <span class="stat"><i class="fas fa-download"></i> Exportar</span>
-                        </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Contacto de Emergencia</h3>
+                        <p class="card-description">Configura tu contacto SOS para emergencias</p>
                     </div>
                     <div class="card-footer">
-                        <button class="card-btn">Ver Reportes</button>
+                        <button class="card-btn card-btn-emergency" id="sosConfigButton">Configurar SOS</button>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- Modal para SOS y Consultas por Voz -->
+    <!-- Modal para Asistente de Voz/SOS -->
     <div id="sosModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2><i class="fas fa-microphone"></i> Asistente de Voz</h2>
-                <button class="modal-close" id="modalClose">&times;</button>
+                <button class="modal-close" id="modalClose">×</button>
             </div>
             <div class="modal-body">
                 <div class="voice-interface">
@@ -223,8 +171,72 @@
         </div>
     </div>
 
+    <!-- Modal para Formulario de Contacto SOS -->
+    <div id="sosContactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-user-plus"></i> Configurar Contacto de Emergencia</h2>
+                <button class="modal-close" id="sosContactModalClose">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="sosContactForm" class="sos-form">
+                    <div class="form-group">
+                        <label for="sosContactName">
+                            <i class="fas fa-user"></i> Nombre del Contacto
+                        </label>
+                        <input type="text" id="sosContactName" name="sosContactName" 
+                               placeholder="Ej: Dr. Juan Pérez" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sosContactPhone">
+                            <i class="fas fa-phone"></i> Teléfono
+                        </label>
+                        <input type="tel" id="sosContactPhone" name="sosContactPhone" 
+                               placeholder="Ej: +54 9 11 1234-5678" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="sosContactEmail">
+                            <i class="fas fa-envelope"></i> Email (opcional)
+                        </label>
+                        <input type="email" id="sosContactEmail" name="sosContactEmail" 
+                               placeholder="ejemplo@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="sosContactRelation">
+                            <i class="fas fa-heart"></i> Relación
+                        </label>
+                        <select id="sosContactRelation" name="sosContactRelation" required>
+                            <option value="">Seleccione una opción</option>
+                            <option value="medico">Médico</option>
+                            <option value="familiar">Familiar</option>
+                            <option value="amigo">Amigo</option>
+                            <option value="cuidador">Cuidador</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Guardar Contacto
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="cancelSosContact">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </form>
+                <div id="sosContactsList" class="sos-contacts-list">
+                    <h3><i class="fas fa-address-book"></i> Contactos Guardados</h3>
+                    <div id="contactsContainer">
+                        <p class="no-contacts">No hay contactos de emergencia guardados.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/voice-assistant.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/medications.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/voice-sos.js"></script>
 </body>
 </html>
