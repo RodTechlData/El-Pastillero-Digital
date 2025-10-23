@@ -3,240 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>El Pastillero Digital - Sistema de Gestión de Medicamentos</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>El Pastillero Digital - Sistema de Gestión de Salud</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1a1a1a;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ffff;
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background-color: #00ffff;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .navbar-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-menu a:hover {
+            color: #00ffff;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #00ffff;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            color: #cccccc;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.1);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.3);
+            border-color: #00ffff;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #00ffff;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.2);
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .card-button {
+            background: linear-gradient(135deg, #00ffff, #0088ff);
+            color: #000000;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+        }
+
+        .card-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 25px rgba(0, 255, 255, 0.5);
+        }
+
+        /* Colores específicos para cada card */
+        .card-pacientes .card-icon { color: #ff6b6b; }
+        .card-pacientes:hover { border-color: #ff6b6b; }
+        .card-pacientes .card-button { background: linear-gradient(135deg, #ff6b6b, #ff4757); }
+
+        .card-medicamentos .card-icon { color: #4ecdc4; }
+        .card-medicamentos:hover { border-color: #4ecdc4; }
+        .card-medicamentos .card-button { background: linear-gradient(135deg, #4ecdc4, #44a3a0); }
+
+        .card-signos .card-icon { color: #95e1d3; }
+        .card-signos:hover { border-color: #95e1d3; }
+        .card-signos .card-button { background: linear-gradient(135deg, #95e1d3, #76c7c0); }
+
+        .card-agenda .card-icon { color: #f38181; }
+        .card-agenda:hover { border-color: #f38181; }
+        .card-agenda .card-button { background: linear-gradient(135deg, #f38181, #e74c3c); }
+
+        .card-farmacia .card-icon { color: #a8e6cf; }
+        .card-farmacia:hover { border-color: #a8e6cf; }
+        .card-farmacia .card-button { background: linear-gradient(135deg, #a8e6cf, #7ed6b5); }
+
+        .card-ajustes .card-icon { color: #ffd93d; }
+        .card-ajustes:hover { border-color: #ffd93d; }
+        .card-ajustes .card-button { background: linear-gradient(135deg, #ffd93d, #f4c430); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .navbar-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background-color: #1a1a1a;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0, 255, 255, 0.2);
+                padding: 2rem 0;
+            }
+
+            .navbar-menu.active {
+                left: 0;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navegación horizontal profesional -->
+    <!-- Navbar -->
     <nav class="navbar">
-        <div class="navbar-container">
-            <div class="navbar-brand">
-                <i class="fas fa-pills"></i>
-                <span>El Pastillero Digital</span>
-            </div>
-            <ul class="navbar-menu">
-                <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
-                <li><a href="#medicamentos"><i class="fas fa-capsules"></i> Medicamentos</a></li>
-                <li><a href="#alarmas"><i class="fas fa-bell"></i> Alarmas</a></li>
-                <li><a href="#historial"><i class="fas fa-history"></i> Historial</a></li>
-                <li><a href="#reportes"><i class="fas fa-chart-line"></i> Reportes</a></li>
-            </ul>
+        <div class="navbar-brand">
+            <i class="fas fa-heartbeat"></i>
+            <span>El Pastillero Digital</span>
         </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="navbar-menu" id="navbarMenu">
+            <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#pacientes"><i class="fas fa-users"></i> Pacientes</a></li>
+            <li><a href="#medicamentos"><i class="fas fa-pills"></i> Medicamentos</a></li>
+            <li><a href="#ajustes"><i class="fas fa-cog"></i> Ajustes</a></li>
+        </ul>
     </nav>
 
-    <!-- Sección Hero con Botón de Vida -->
-    <section class="hero-section" id="inicio">
-        <div class="hero-content">
-            <h1>Tu Salud, Siempre Contigo</h1>
-            <p>Sistema inteligente de gestión de medicamentos con asistencia por voz</p>
-            <button class="life-button" id="lifeButton" title="Botón de Vida - Presiona para asistencia por voz">
-                <i class="fas fa-microphone"></i>
-                <span class="life-button-text">Botón de Vida</span>
-                <span class="pulse-ring"></span>
-            </button>
-        </div>
-    </section>
+    <!-- Main Container -->
+    <div class="container">
+        <h1 class="page-title">Sistema de Gestión de Salud</h1>
+        <p class="page-subtitle">Administra tu salud de manera integral y profesional</p>
 
-    <!-- Sección de Cards de Navegación Estilo App -->
-    <section class="dashboard-section">
-        <div class="container">
-            <h2 class="section-title">Panel de Control</h2>
-            <div class="cards-grid">
-                <!-- Card 1: Agregar Medicamento -->
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Agregar Medicamento</h3>
-                        <p class="card-description">Registra nuevos medicamentos con recordatorios personalizados</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn" onclick="location.href='#agregar'">Agregar Ahora</button>
-                    </div>
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+            <!-- Card Pacientes -->
+            <div class="card card-pacientes">
+                <div class="card-icon">
+                    <i class="fas fa-user-md"></i>
                 </div>
-
-                <!-- Card 2: Mis Medicamentos -->
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-list-ul"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Mis Medicamentos</h3>
-                        <p class="card-description">Consulta y gestiona todos tus medicamentos registrados</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn" onclick="location.href='#lista'">Ver Lista</button>
-                    </div>
-                </div>
-
-                <!-- Card 3: Alarmas Activas -->
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Alarmas Activas</h3>
-                        <p class="card-description">Configura y personaliza tus recordatorios de medicación</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn" onclick="location.href='#alarmas'">Configurar</button>
-                    </div>
-                </div>
-
-                <!-- Card 4: Historial -->
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-history"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Historial de Tomas</h3>
-                        <p class="card-description">Revisa tu historial completo de medicación</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn" onclick="location.href='#historial'">Ver Historial</button>
-                    </div>
-                </div>
-
-                <!-- Card 5: Reportes -->
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="fas fa-file-medical-alt"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Reportes Médicos</h3>
-                        <p class="card-description">Genera reportes detallados para tu médico</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn" onclick="location.href='#reportes'">Ver Reportes</button>
-                    </div>
-                </div>
-
-                <!-- Card 6: Contacto SOS -->
-                <div class="card card-emergency">
-                    <div class="card-icon">
-                        <i class="fas fa-phone-volume"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Contacto de Emergencia</h3>
-                        <p class="card-description">Configura tu contacto SOS para emergencias</p>
-                    </div>
-                    <div class="card-footer">
-                        <button class="card-btn card-btn-emergency" id="sosConfigButton">Configurar SOS</button>
-                    </div>
-                </div>
+                <h3 class="card-title">Pacientes</h3>
+                <p class="card-description">Gestiona la información completa de tus pacientes de manera segura y organizada</p>
+                <button class="card-button" onclick="location.href='#pacientes'">Acceder</button>
             </div>
-        </div>
-    </section>
 
-    <!-- Modal para Asistente de Voz/SOS -->
-    <div id="sosModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-microphone"></i> Asistente de Voz</h2>
-                <button class="modal-close" id="modalClose">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="voice-interface">
-                    <div class="voice-status" id="voiceStatus">
-                        <i class="fas fa-microphone-slash"></i>
-                        <p>Presiona el botón para hablar</p>
-                    </div>
-                    <div class="voice-controls">
-                        <button class="voice-btn start" id="startListening">
-                            <i class="fas fa-microphone"></i>
-                            Iniciar Grabación
-                        </button>
-                        <button class="voice-btn stop" id="stopListening" style="display:none;">
-                            <i class="fas fa-stop"></i>
-                            Detener
-                        </button>
-                    </div>
-                    <div class="voice-transcript" id="voiceTranscript">
-                        <p>El texto de tu consulta aparecerá aquí...</p>
-                    </div>
-                    <div class="emergency-buttons">
-                        <button class="emergency-btn" id="sosButton">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            EMERGENCIA SOS
-                        </button>
-                        <button class="consultation-btn" id="consultationButton">
-                            <i class="fas fa-question-circle"></i>
-                            Consulta Medicamentos
-                        </button>
-                    </div>
+            <!-- Card Medicamentos -->
+            <div class="card card-medicamentos">
+                <div class="card-icon">
+                    <i class="fas fa-pills"></i>
                 </div>
+                <h3 class="card-title">Medicamentos</h3>
+                <p class="card-description">Administra el registro de medicamentos, dosis y recordatorios</p>
+                <button class="card-button" onclick="location.href='#medicamentos'">Acceder</button>
+            </div>
+
+            <!-- Card Signos Vitales -->
+            <div class="card card-signos">
+                <div class="card-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3 class="card-title">Signos Vitales</h3>
+                <p class="card-description">Monitorea presión arterial, temperatura, frecuencia cardíaca y más</p>
+                <button class="card-button" onclick="location.href='#signos-vitales'">Acceder</button>
+            </div>
+
+            <!-- Card Agenda Médica -->
+            <div class="card card-agenda">
+                <div class="card-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3 class="card-title">Agenda Médica</h3>
+                <p class="card-description">Organiza citas, consultas y seguimiento de tratamientos</p>
+                <button class="card-button" onclick="location.href='#agenda'">Acceder</button>
+            </div>
+
+            <!-- Card Buscar Farmacia -->
+            <div class="card card-farmacia">
+                <div class="card-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <h3 class="card-title">Buscar Farmacia</h3>
+                <p class="card-description">Encuentra farmacias cercanas y verifica disponibilidad de medicamentos</p>
+                <button class="card-button" onclick="location.href='#farmacias'">Acceder</button>
+            </div>
+
+            <!-- Card Ajustes -->
+            <div class="card card-ajustes">
+                <div class="card-icon">
+                    <i class="fas fa-cog"></i>
+                </div>
+                <h3 class="card-title">Ajustes</h3>
+                <p class="card-description">Configura preferencias, notificaciones y personaliza tu experiencia</p>
+                <button class="card-button" onclick="location.href='#ajustes'">Acceder</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal para Formulario de Contacto SOS -->
-    <div id="sosContactModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-user-plus"></i> Configurar Contacto de Emergencia</h2>
-                <button class="modal-close" id="sosContactModalClose">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="sosContactForm" class="sos-form">
-                    <div class="form-group">
-                        <label for="sosContactName">
-                            <i class="fas fa-user"></i> Nombre del Contacto
-                        </label>
-                        <input type="text" id="sosContactName" name="sosContactName" 
-                               placeholder="Ej: Dr. Juan Pérez" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sosContactPhone">
-                            <i class="fas fa-phone"></i> Teléfono
-                        </label>
-                        <input type="tel" id="sosContactPhone" name="sosContactPhone" 
-                               placeholder="Ej: +54 9 11 1234-5678" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sosContactEmail">
-                            <i class="fas fa-envelope"></i> Email (opcional)
-                        </label>
-                        <input type="email" id="sosContactEmail" name="sosContactEmail" 
-                               placeholder="ejemplo@email.com">
-                    </div>
-                    <div class="form-group">
-                        <label for="sosContactRelation">
-                            <i class="fas fa-heart"></i> Relación
-                        </label>
-                        <select id="sosContactRelation" name="sosContactRelation" required>
-                            <option value="">Seleccione una opción</option>
-                            <option value="medico">Médico</option>
-                            <option value="familiar">Familiar</option>
-                            <option value="amigo">Amigo</option>
-                            <option value="cuidador">Cuidador</option>
-                            <option value="otro">Otro</option>
-                        </select>
-                    </div>
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-save"></i> Guardar Contacto
-                        </button>
-                        <button type="button" class="btn btn-secondary" id="cancelSosContact">
-                            <i class="fas fa-times"></i> Cancelar
-                        </button>
-                    </div>
-                </form>
-                <div id="sosContactsList" class="sos-contacts-list">
-                    <h3><i class="fas fa-address-book"></i> Contactos Guardados</h3>
-                    <div id="contactsContainer">
-                        <p class="no-contacts">No hay contactos de emergencia guardados.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        // Menú hamburguesa
+        const hamburger = document.getElementById('hamburger');
+        const navbarMenu = document.getElementById('navbarMenu');
 
-    <!-- Scripts -->
-    <script src="js/app.js"></script>
-    <script src="js/medications.js"></script>
-    <script src="js/scripts.js"></script>
-    <script src="js/voice-sos.js"></script>
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navbarMenu.classList.toggle('active');
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        const navLinks = document.querySelectorAll('.navbar-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navbarMenu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
