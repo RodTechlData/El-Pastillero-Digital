@@ -5,200 +5,122 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>El Pastillero Digital - Sistema de Gestión de Salud</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    /* Mantener paleta actual (neón cian sobre fondo oscuro) */
-    *{margin:0;padding:0;box-sizing:border-box}
-    :root{
-      --c-bg:#000;
-      --c-surface-1:#1a1a1a;
-      --c-surface-2:#2d2d2d;
-      --c-accent:#00ffff;
-      --c-accent-2:#0088ff;
-      --c-text:#fff;
-      --c-text-2:#ccc;
-      --c-danger:#ff6b6b;
-      --c-meds:#4ecdc4;
-      --c-signs:#95e1d3;
-      --radius:16px;
-      --shadow:0 8px 20px rgba(0,255,255,.12);
-    }
-    body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--c-bg);color:var(--c-text);min-height:100vh}
-    .navbar{background:var(--c-surface-1);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,255,255,.1);position:sticky;top:0;z-index:1000}
-    .navbar-brand{display:flex;align-items:center;gap:.5rem;font-size:1.25rem;font-weight:700;color:var(--c-accent)}
-    .navbar-brand i{font-size:1.5rem}
-    .navbar-menu{display:flex;gap:1rem;list-style:none}
-    .navbar-menu a{color:#fff;text-decoration:none;transition:color .2s ease;display:flex;align-items:center;gap:.4rem;font-size:.95rem}
-    .navbar-menu a:hover{color:var(--c-accent)}
-    .hamburger{display:none}
-    .container{max-width:1200px;margin:0 auto;padding:2rem}
-    .page-title{text-align:center;font-size:2rem;margin-bottom:.5rem;color:var(--c-accent);text-shadow:0 0 20px rgba(0,255,255,.5)}
-    .page-subtitle{text-align:center;font-size:1rem;margin-bottom:2rem;color:var(--c-text-2)}
-    .cards-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:1rem}
-    .card{background:linear-gradient(145deg,var(--c-surface-1),var(--c-surface-2));border-radius:var(--radius);padding:1.5rem;text-align:center;transition:all .25s ease;box-shadow:var(--shadow);border:2px solid transparent;cursor:pointer}
-    .card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,255,255,.28);border-color:var(--c-accent)}
-    .card-icon{font-size:3rem;margin-bottom:1rem;color:var(--c-accent);transition:all .25s ease}
-    .card:hover .card-icon{transform:scale(1.08);text-shadow:0 0 30px rgba(0,255,255,.8)}
-    .card-title{font-size:1.2rem;margin-bottom:.5rem;font-weight:700}
-    .card-description{font-size:.95rem;color:var(--c-text-2);margin-bottom:1rem;line-height:1.5}
-    .card-button{background:linear-gradient(135deg,var(--c-accent),var(--c-accent-2));color:#000;border:none;padding:.6rem 1.25rem;border-radius:30px;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .2s ease;box-shadow:0 4px 15px rgba(0,255,255,.3)}
-    .card-button:hover{transform:scale(1.04);box-shadow:0 6px 24px rgba(0,255,255,.5)}
-    .chip{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);padding:.25rem .6rem;border-radius:999px;font-size:.8rem;color:#fff}
-    .row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
-    .footer{margin-top:3rem;padding:1.5rem;text-align:center;color:var(--c-text-2);border-top:1px solid rgba(255,255,255,.08)}
-
-    /* Variantes por módulo */
-    .card-pacientes .card-icon{color:var(--c-danger)}
-    .card-pacientes:hover{border-color:var(--c-danger)}
-    .card-medicamentos .card-icon{color:var(--c-meds)}
-    .card-medicamentos:hover{border-color:var(--c-meds)}
-    .card-signos .card-icon{color:var(--c-signs)}
-    .card-signos:hover{border-color:var(--c-signs)}
-
-    /* Layouts simples de módulo */
-    .toolbar{display:flex;gap:.75rem;justify-content:flex-end;margin-bottom:1rem}
-    .btn{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);color:#fff;padding:.55rem 1rem;border-radius:10px;cursor:pointer}
-    .btn.primary{border-color:transparent;background:linear-gradient(135deg,var(--c-accent),var(--c-accent-2));color:#000;font-weight:700}
-    .btn.danger{border-color:rgba(255,0,0,.25);color:#fff}
-    .input, select, .select{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);color:#fff;padding:.6rem .8rem;border-radius:10px;outline:none}
-    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    .table th{font-size:.8rem;color:var(--c-text-2);text-align:left;padding:.5rem .75rem}
-    .table td{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);padding:.75rem;border-left:none;border-right:none}
-
-    /* Modal */
-    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:2000}
-    .modal{background:linear-gradient(145deg,var(--c-surface-1),var(--c-surface-2));border:1px solid rgba(255,255,255,.12);border-radius:18px;box-shadow:0 30px 80px rgba(0,0,0,.45);width:min(680px,90vw);max-height:85vh;overflow:auto}
-    .modal header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid rgba(255,255,255,.08)}
-    .modal .content{padding:1rem 1.25rem;display:grid;gap:1rem}
-    .form-grid{display:grid;gap:.75rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .modal .actions{display:flex;justify-content:flex-end;gap:.5rem;padding:1rem 1.25rem;border-top:1px solid rgba(255,255,255,.08)}
-
-    /* Responsive menu */
-    @media (max-width: 800px){
-      .navbar-menu{display:none}
-      .hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer}
-      .hamburger span{width:28px;height:3px;background:var(--c-accent)}
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <nav class="navbar">
-    <div class="navbar-brand"><i class="fa-solid fa-capsules"></i> El Pastillero Digital</div>
+    <div class="navbar-brand">
+      <i class="fa-solid fa-capsules"></i>
+      <span>El Pastillero Digital</span>
+    </div>
     <ul class="navbar-menu">
+      <li><a href="#/pacientes"><i class="fa-solid fa-users"></i> Pacientes</a></li>
       <li><a href="#/"><i class="fa-solid fa-house"></i> Inicio</a></li>
-      <li><a href="#/pacientes"><i class="fa-solid fa-user-group"></i> Pacientes</a></li>
-      <li><a href="#/medicamentos"><i class="fa-solid fa-pills"></i> Medicamentos</a></li>
-      <li><a href="#/signos-vitales"><i class="fa-solid fa-heart-pulse"></i> Signos Vitales</a></li>
-      <li><a href="#/agenda"><i class="fa-solid fa-calendar"></i> Agenda</a></li>
-      <li><a href="#/farmacias"><i class="fa-solid fa-store"></i> Buscar Farmacia</a></li>
-      <li><a href="#/ajustes"><i class="fa-solid fa-gear"></i> Ajustes</a></li>
     </ul>
-    <button id="btnMenu" class="hamburger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
   </nav>
 
-  <main id="app" class="container"></main>
+  <main id="app-main" class="container">
+    <!-- Cards/Home -->
+    <section id="home-section" class="page" hidden>
+      <h1 class="page-title">Panel principal</h1>
+      <p class="page-subtitle">Accede a pacientes, signos vitales y medicación</p>
+      <div class="cards-grid" id="cards-grid">
+        <!-- cards dynamically -->
+      </div>
+    </section>
 
-  <footer class="footer">
-    Copyright DATAFLOWIA.COM | <a href="mailto:contacto@dataflowia.com">contacto@dataflowia.com</a> | by Rodrigo CH
-  </footer>
+    <!-- Pacientes -->
+    <section id="pacientes-section" class="page">
+      <h1 class="page-title">Pacientes</h1>
+      <div id="pacientes-toolbar" class="toolbar">
+        <button id="btn-nuevo-paciente" class="btn btn-primary"><i class="fa fa-user-plus"></i> Nuevo paciente</button>
+        <input id="buscar-paciente" type="search" placeholder="Buscar paciente..." />
+      </div>
+      <div id="lista-pacientes" class="list"></div>
+    </section>
+  </main>
+
+  <!-- Modal Paciente -->
+  <div id="modal-paciente" class="modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h2 id="modal-title">Nuevo paciente</h2>
+        <button id="modal-close" class="icon-btn" aria-label="Cerrar"><i class="fa fa-times"></i></button>
+      </header>
+      <div class="modal-body">
+        <form id="form-paciente">
+          <div class="field">
+            <label>Nombre</label>
+            <input name="nombre" required />
+          </div>
+          <div class="field">
+            <label>DNI</label>
+            <input name="dni" required />
+          </div>
+          <div class="field">
+            <label>Edad</label>
+            <input name="edad" type="number" min="0" />
+          </div>
+        </form>
+      </div>
+      <footer class="modal-footer">
+        <button id="modal-save" class="btn btn-primary">Guardar</button>
+        <button id="modal-cancel" class="btn">Cancelar</button>
+      </footer>
+    </div>
+  </div>
 
   <script>
-    // Estado global simple con persistencia
-    const Store = (()=>{
-      const LS_KEY = 'epd_state_v1';
-      const initial = { pacientes: [], medicamentos: [], signos: [], agenda: [] };
-      let state = JSON.parse(localStorage.getItem(LS_KEY)||'null') || initial;
-      const listeners = new Set();
-      const get = ()=>state;
-      const set = (next)=>{ state = {...state, ...next}; localStorage.setItem(LS_KEY, JSON.stringify(state)); listeners.forEach(l=>l(state)); };
-      const subscribe = (fn)=>{ listeners.add(fn); return ()=>listeners.delete(fn); };
-      return { get, set, subscribe };
-    })();
+    // Simple hash router defaulting to pacientes
+    function show(sectionId) {
+      document.querySelectorAll('.page').forEach(s => s.hidden = true);
+      const el = document.getElementById(sectionId);
+      if (el) el.hidden = false;
+    }
 
-    // Utilidades UI
-    const UI = {
-      h: (tag, props={}, ...children)=>{
-        const el = document.createElement(tag);
-        Object.entries(props).forEach(([k,v])=>{
-          if(k.startsWith('on') && typeof v==='function') el.addEventListener(k.substring(2).toLowerCase(), v);
-          else if(k==='class') el.className = v; else if(v!=null) el.setAttribute(k, v);
-        });
-        children.flat().forEach(c=>{ if(c==null) return; el.append(c.nodeType? c : document.createTextNode(c)); });
-        return el;
-      },
-      icon: (cls)=>UI.h('i',{class:cls}),
-      button:(label,cls='',on)=>UI.h('button',{class:`btn ${cls}`,onClick:on},label),
-      input:(type,opts={})=>{ const el=UI.h('input',{class:'input',type,...opts}); return el; },
-      select:(opts,attrs={})=>{ const s=UI.h('select',attrs); opts.forEach(o=>s.append(UI.h('option',{value:o.value,selected:o.selected?true:null},o.label))); return s; },
-      modal:(title,content,actions=[])=>{
-        const bd = UI.h('div',{class:'modal-backdrop',role:'dialog','aria-modal':'true'});
-        const m = UI.h('div',{class:'modal'});
-        const close=()=>bd.remove();
-        m.append(
-          UI.h('header',{}, UI.h('h3',{},title), UI.button('Cerrar','',close)),
-          UI.h('div',{class:'content'}, content),
-          UI.h('div',{class:'actions'}, actions.map(a=>UI.button(a.label,a.variant||'',()=>{ if(a.onClick) a.onClick({close}); })))
-        );
-        bd.style.display='flex';
-        bd.addEventListener('click',e=>{ if(e.target===bd) close(); });
-        bd.append(m);
-        document.body.append(bd);
-        return { close };
-      },
-      notify:(msg)=>{ alert(msg); }
-    };
+    function navigate() {
+      const hash = location.hash || '#/pacientes';
+      if (hash.startsWith('#/pacientes')) show('pacientes-section');
+      else show('home-section');
+    }
 
-    // Router SPA
-    const routes = {};
-    const route = (path, view)=>{ routes[path]=view; };
-    const render = async ()=>{
-      const hash = location.hash.replace('#','') || '/';
-      const view = routes[hash] || routes['/404'];
-      const app = document.getElementById('app');
-      app.innerHTML = '';
-      app.append(await view());
-    };
-    window.addEventListener('hashchange', render);
-    window.addEventListener('load', render);
+    window.addEventListener('hashchange', navigate);
+    // Ensure default route on first load
+    if (!location.hash) location.hash = '#/pacientes';
+    navigate();
 
-    // Home/Dashboard
-    route('/', ()=>{
-      const cards = [
-        {key:'pacientes', title:'Pacientes', icon:'fa-solid fa-user-group', desc:'Administra pacientes y tratamientos', path:'#/pacientes', cls:'card-pacientes'},
-        {key:'medicamentos', title:'Medicamentos', icon:'fa-solid fa-pills', desc:'Gestiona fármacos y horarios', path:'#/medicamentos', cls:'card-medicamentos'},
-        {key:'signos', title:'Signos Vitales', icon:'fa-solid fa-heart-pulse', desc:'Registra y revisa signos', path:'#/signos-vitales', cls:'card-signos'},
-        {key:'agenda', title:'Agenda Médica', icon:'fa-solid fa-calendar', desc:'Citas y recordatorios', path:'#/agenda'},
-        {key:'farmacias', title:'Buscar Farmacia', icon:'fa-solid fa-store', desc:'Encuentra farmacias cercanas', path:'#/farmacias'},
-        {key:'ajustes', title:'Ajustes', icon:'fa-solid fa-gear', desc:'Preferencias del sistema', path:'#/ajustes'}
-      ];
-      const grid = UI.h('div',{class:'cards-grid'},
-        cards.map(c=>UI.h('div',{class:`card ${c.cls||''}`,onClick:()=>location.hash=c.path.replace('#','')},
-          UI.h('div',{class:'card-icon'}, UI.icon(c.icon)),
-          UI.h('div',{class:'card-title'}, c.title),
-          UI.h('div',{class:'card-description'}, c.desc),
-          UI.h('div',{}, UI.h('button',{class:'card-button'}, 'Abrir'))
-        ))
-      );
+    // Modal wiring
+    const modal = document.getElementById('modal-paciente');
+    const btnNuevo = document.getElementById('btn-nuevo-paciente');
+    const btnClose = document.getElementById('modal-close');
+    const btnCancel = document.getElementById('modal-cancel');
 
-      const hero = UI.h('div',{class:'row'},
-        UI.h('div',{class:'chip'}, UI.icon('fa-solid fa-circle'), ' Botón de Vida'),
-        UI.h('div',{class:'chip'}, UI.icon('fa-solid fa-heart'), ' Salud'),
-        UI.h('div',{class:'chip'}, UI.icon('fa-solid fa-bell'), ' Recordatorios')
-      );
+    function openModal() {
+      modal.setAttribute('aria-hidden', 'false');
+      modal.classList.add('open');
+    }
+    function closeModal() {
+      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('open');
+    }
 
-      return UI.h('div',{},
-        UI.h('h1',{class:'page-title'}, 'El Pastillero Digital'),
-        UI.h('p',{class:'page-subtitle'}, 'Sistema de gestión médica'),
-        hero,
-        grid
-      );
-    });
+    btnNuevo && btnNuevo.addEventListener('click', openModal);
+    btnClose && btnClose.addEventListener('click', closeModal);
+    btnCancel && btnCancel.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
 
-    // Pacientes
-    route('/pacientes', ()=>{
-      const state = Store.get();
-      const list = UI.h('div',{class:'cards-grid'},
-        state.pacientes.length? state.pacientes.map((p,idx)=>PatientCard(p, idx)) : UI.h('div',{}, 'Sin pacientes registrados')
-      );
-      const addBtn = UI.button('+ Nuevo Paciente','primary',()=>openPatientModal());
-      return UI.h('div',{},
-        UI.h('h2',{class:'page
+    // Demo seed for patients list
+    const lista = document.getElementById('lista-pacientes');
+    if (lista) {
+      lista.innerHTML = `
+        <div class="card patient">
+          <div>
+            <strong>Juan Pérez</strong><br/>
+            DNI 12345678 · 45 años
+          </div>
+          <button class="btn btn-light">Ver</button>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
