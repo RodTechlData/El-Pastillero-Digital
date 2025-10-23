@@ -18,7 +18,6 @@
       <li><a href="#/"><i class="fa-solid fa-house"></i> Inicio</a></li>
     </ul>
   </nav>
-
   <main id="app-main" class="container">
     <!-- Cards/Home -->
     <section id="home-section" class="page" hidden>
@@ -28,7 +27,6 @@
         <!-- cards dynamically -->
       </div>
     </section>
-
     <!-- Pacientes -->
     <section id="pacientes-section" class="page">
       <h1 class="page-title">Pacientes</h1>
@@ -39,7 +37,6 @@
       <div id="lista-pacientes" class="list"></div>
     </section>
   </main>
-
   <!-- Modal Paciente -->
   <div id="modal-paciente" class="modal" aria-hidden="true">
     <div class="modal-dialog">
@@ -50,77 +47,38 @@
       <div class="modal-body">
         <form id="form-paciente">
           <div class="field">
-            <label>Nombre</label>
-            <input name="nombre" required />
+            <label for="paciente-nombre">Nombre</label>
+            <input id="paciente-nombre" name="nombre" required />
           </div>
           <div class="field">
-            <label>DNI</label>
-            <input name="dni" required />
+            <label for="paciente-dni">DNI</label>
+            <input id="paciente-dni" name="dni" required />
           </div>
           <div class="field">
-            <label>Edad</label>
-            <input name="edad" type="number" min="0" />
+            <label for="paciente-edad">Edad</label>
+            <input id="paciente-edad" name="edad" type="number" min="0" />
+          </div>
+          <div class="field">
+            <label for="paciente-direccion">Dirección</label>
+            <input id="paciente-direccion" name="direccion" />
+          </div>
+          <div class="field">
+            <label for="paciente-telefono">Teléfono</label>
+            <input id="paciente-telefono" name="telefono" type="tel" />
+          </div>
+          <div class="field">
+            <label for="paciente-medicamentos">Medicamentos (separados por coma)</label>
+            <input id="paciente-medicamentos" name="medicamentos" placeholder="Ej: Aspirina, Ibuprofeno" />
+            <div id="chips-container" class="chips-container"></div>
           </div>
         </form>
       </div>
       <footer class="modal-footer">
-        <button id="modal-save" class="btn btn-primary">Guardar</button>
-        <button id="modal-cancel" class="btn">Cancelar</button>
+        <button id="modal-guardar" class="btn btn-primary">Guardar</button>
+        <button id="modal-cancelar" class="btn">Cancelar</button>
       </footer>
     </div>
   </div>
-
-  <script>
-    // Simple hash router defaulting to pacientes
-    function show(sectionId) {
-      document.querySelectorAll('.page').forEach(s => s.hidden = true);
-      const el = document.getElementById(sectionId);
-      if (el) el.hidden = false;
-    }
-
-    function navigate() {
-      const hash = location.hash || '#/pacientes';
-      if (hash.startsWith('#/pacientes')) show('pacientes-section');
-      else show('home-section');
-    }
-
-    window.addEventListener('hashchange', navigate);
-    // Ensure default route on first load
-    if (!location.hash) location.hash = '#/pacientes';
-    navigate();
-
-    // Modal wiring
-    const modal = document.getElementById('modal-paciente');
-    const btnNuevo = document.getElementById('btn-nuevo-paciente');
-    const btnClose = document.getElementById('modal-close');
-    const btnCancel = document.getElementById('modal-cancel');
-
-    function openModal() {
-      modal.setAttribute('aria-hidden', 'false');
-      modal.classList.add('open');
-    }
-    function closeModal() {
-      modal.setAttribute('aria-hidden', 'true');
-      modal.classList.remove('open');
-    }
-
-    btnNuevo && btnNuevo.addEventListener('click', openModal);
-    btnClose && btnClose.addEventListener('click', closeModal);
-    btnCancel && btnCancel.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
-
-    // Demo seed for patients list
-    const lista = document.getElementById('lista-pacientes');
-    if (lista) {
-      lista.innerHTML = `
-        <div class="card patient">
-          <div>
-            <strong>Juan Pérez</strong><br/>
-            DNI 12345678 · 45 años
-          </div>
-          <button class="btn btn-light">Ver</button>
-        </div>
-      `;
-    }
-  </script>
+  <script src="js/pacientes.js"></script>
 </body>
 </html>
