@@ -1,84 +1,334 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>El Pastillero Digital - Sistema de Gestión de Salud</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-brand">
       <i class="fa-solid fa-capsules"></i>
       <span>El Pastillero Digital</span>
     </div>
     <ul class="navbar-menu">
-      <li><a href="#/pacientes"><i class="fa-solid fa-users"></i> Pacientes</a></li>
-      <li><a href="#/"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="#/" data-route="home"><i class="fa-solid fa-house"></i> Inicio</a></li>
+      <li><a href="#/pacientes" data-route="pacientes"><i class="fa-solid fa-users"></i> Pacientes</a></li>
     </ul>
   </nav>
+
+  <!-- Main Container -->
   <main id="app-main" class="container">
-    <!-- Cards/Home -->
-    <section id="home-section" class="page" hidden>
-      <h1 class="page-title">Panel principal</h1>
+    <!-- Dashboard / Home Section -->
+    <section id="home-section" class="page">
+      <h1 class="page-title">Panel Principal</h1>
       <p class="page-subtitle">Accede a pacientes, signos vitales y medicación</p>
       <div class="cards-grid" id="cards-grid">
-        <!-- cards dynamically -->
+        <!-- Cards will be dynamically generated -->
       </div>
     </section>
-    <!-- Pacientes -->
-    <section id="pacientes-section" class="page">
-      <h1 class="page-title">Pacientes</h1>
+
+    <!-- Pacientes Section -->
+    <section id="pacientes-section" class="page" hidden>
+      <h1 class="page-title">Gestión de Pacientes</h1>
       <div id="pacientes-toolbar" class="toolbar">
-        <button id="btn-nuevo-paciente" class="btn btn-primary"><i class="fa fa-user-plus"></i> Nuevo paciente</button>
-        <input id="buscar-paciente" type="search" placeholder="Buscar paciente..." />
+        <button id="btn-nuevo-paciente" class="btn btn-primary">
+          <i class="fa fa-user-plus"></i> Nuevo Paciente
+        </button>
+        <input id="buscar-paciente" type="search" placeholder="Buscar paciente..." class="search-input">
       </div>
-      <div id="lista-pacientes" class="list"></div>
+      <div id="pacientes-lista" class="pacientes-lista">
+        <!-- Patient list will be dynamically generated -->
+      </div>
     </section>
   </main>
-  <!-- Modal Paciente -->
-  <div id="modal-paciente" class="modal" aria-hidden="true">
-    <div class="modal-dialog">
-      <header class="modal-header">
-        <h2 id="modal-title">Nuevo paciente</h2>
-        <button id="modal-close" class="icon-btn" aria-label="Cerrar"><i class="fa fa-times"></i></button>
-      </header>
-      <div class="modal-body">
-        <form id="form-paciente">
-          <div class="field">
-            <label for="paciente-nombre">Nombre</label>
-            <input id="paciente-nombre" name="nombre" required />
-          </div>
-          <div class="field">
-            <label for="paciente-dni">DNI</label>
-            <input id="paciente-dni" name="dni" required />
-          </div>
-          <div class="field">
-            <label for="paciente-edad">Edad</label>
-            <input id="paciente-edad" name="edad" type="number" min="0" />
-          </div>
-          <div class="field">
-            <label for="paciente-direccion">Dirección</label>
-            <input id="paciente-direccion" name="direccion" />
-          </div>
-          <div class="field">
-            <label for="paciente-telefono">Teléfono</label>
-            <input id="paciente-telefono" name="telefono" type="tel" />
-          </div>
-          <div class="field">
-            <label for="paciente-medicamentos">Medicamentos (separados por coma)</label>
-            <input id="paciente-medicamentos" name="medicamentos" placeholder="Ej: Aspirina, Ibuprofeno" />
-            <div id="chips-container" class="chips-container"></div>
-          </div>
-        </form>
+
+  <!-- Modal for Add/Edit Patient -->
+  <div id="modal-paciente" class="modal" hidden>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Nuevo Paciente</h2>
+        <button id="btn-cerrar-modal" class="btn-close">
+          <i class="fa fa-times"></i>
+        </button>
       </div>
-      <footer class="modal-footer">
-        <button id="modal-guardar" class="btn btn-primary">Guardar</button>
-        <button id="modal-cancelar" class="btn">Cancelar</button>
-      </footer>
+      <form id="form-paciente" class="modal-body">
+        <div class="form-group">
+          <label for="nombre">Nombre Completo</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="edad">Edad</label>
+          <input type="number" id="edad" name="edad" min="0" max="120" required>
+        </div>
+        <div class="form-group">
+          <label for="dni">DNI/Identificación</label>
+          <input type="text" id="dni" name="dni" required>
+        </div>
+        <div class="form-group">
+          <label for="diagnostico">Diagnóstico</label>
+          <textarea id="diagnostico" name="diagnostico" rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-cancelar" class="btn btn-secondary">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
     </div>
   </div>
-  <script src="js/pacientes.js"></script>
+
+  <!-- JavaScript SPA Logic -->
+  <script>
+    // Secure SPA Router
+    const router = {
+      currentRoute: 'home',
+      routes: {
+        'home': 'home-section',
+        'pacientes': 'pacientes-section'
+      },
+      navigate(route) {
+        // Hide all sections
+        Object.values(this.routes).forEach(sectionId => {
+          const section = document.getElementById(sectionId);
+          if (section) section.hidden = true;
+        });
+        
+        // Show target section
+        const targetSection = document.getElementById(this.routes[route] || this.routes['home']);
+        if (targetSection) {
+          targetSection.hidden = false;
+          this.currentRoute = route;
+        }
+      },
+      init() {
+        // Handle hash changes
+        window.addEventListener('hashchange', () => {
+          const hash = window.location.hash.slice(2) || 'home';
+          this.navigate(hash);
+        });
+        
+        // Initial route
+        const initialHash = window.location.hash.slice(2) || 'home';
+        this.navigate(initialHash);
+      }
+    };
+
+    // Patient Management
+    const patientManager = {
+      patients: [],
+      currentPatientId: null,
+      
+      init() {
+        this.loadPatients();
+        this.bindEvents();
+        this.renderPatientList();
+        this.renderDashboardCards();
+      },
+      
+      loadPatients() {
+        const stored = localStorage.getItem('pacientes');
+        this.patients = stored ? JSON.parse(stored) : [];
+      },
+      
+      savePatients() {
+        localStorage.setItem('pacientes', JSON.stringify(this.patients));
+      },
+      
+      bindEvents() {
+        // Open modal for new patient
+        document.getElementById('btn-nuevo-paciente').addEventListener('click', () => {
+          this.openModal();
+        });
+        
+        // Close modal
+        document.getElementById('btn-cerrar-modal').addEventListener('click', () => {
+          this.closeModal();
+        });
+        
+        document.getElementById('btn-cancelar').addEventListener('click', () => {
+          this.closeModal();
+        });
+        
+        // Form submit
+        document.getElementById('form-paciente').addEventListener('submit', (e) => {
+          e.preventDefault();
+          this.savePatient();
+        });
+        
+        // Search functionality
+        document.getElementById('buscar-paciente').addEventListener('input', (e) => {
+          this.filterPatients(e.target.value);
+        });
+      },
+      
+      openModal(patient = null) {
+        const modal = document.getElementById('modal-paciente');
+        const modalTitle = document.getElementById('modal-title');
+        const form = document.getElementById('form-paciente');
+        
+        form.reset();
+        
+        if (patient) {
+          modalTitle.textContent = 'Editar Paciente';
+          this.currentPatientId = patient.id;
+          document.getElementById('nombre').value = patient.nombre;
+          document.getElementById('edad').value = patient.edad;
+          document.getElementById('dni').value = patient.dni;
+          document.getElementById('diagnostico').value = patient.diagnostico || '';
+        } else {
+          modalTitle.textContent = 'Nuevo Paciente';
+          this.currentPatientId = null;
+        }
+        
+        modal.hidden = false;
+      },
+      
+      closeModal() {
+        const modal = document.getElementById('modal-paciente');
+        modal.hidden = true;
+        this.currentPatientId = null;
+      },
+      
+      savePatient() {
+        const nombre = document.getElementById('nombre').value.trim();
+        const edad = document.getElementById('edad').value;
+        const dni = document.getElementById('dni').value.trim();
+        const diagnostico = document.getElementById('diagnostico').value.trim();
+        
+        if (this.currentPatientId) {
+          // Edit existing patient
+          const index = this.patients.findIndex(p => p.id === this.currentPatientId);
+          if (index !== -1) {
+            this.patients[index] = {
+              ...this.patients[index],
+              nombre,
+              edad: parseInt(edad),
+              dni,
+              diagnostico
+            };
+          }
+        } else {
+          // Add new patient
+          const newPatient = {
+            id: Date.now(),
+            nombre,
+            edad: parseInt(edad),
+            dni,
+            diagnostico,
+            fechaRegistro: new Date().toISOString()
+          };
+          this.patients.push(newPatient);
+        }
+        
+        this.savePatients();
+        this.renderPatientList();
+        this.renderDashboardCards();
+        this.closeModal();
+      },
+      
+      deletePatient(id) {
+        if (confirm('¿Está seguro de eliminar este paciente?')) {
+          this.patients = this.patients.filter(p => p.id !== id);
+          this.savePatients();
+          this.renderPatientList();
+          this.renderDashboardCards();
+        }
+      },
+      
+      filterPatients(searchTerm) {
+        const term = searchTerm.toLowerCase();
+        const filtered = this.patients.filter(p => 
+          p.nombre.toLowerCase().includes(term) ||
+          p.dni.includes(term)
+        );
+        this.renderPatientList(filtered);
+      },
+      
+      renderPatientList(patients = this.patients) {
+        const lista = document.getElementById('pacientes-lista');
+        
+        if (patients.length === 0) {
+          lista.innerHTML = '<p class="empty-state">No hay pacientes registrados</p>';
+          return;
+        }
+        
+        lista.innerHTML = patients.map(patient => `
+          <div class="patient-card" data-id="${patient.id}">
+            <div class="patient-info">
+              <h3>${this.escapeHtml(patient.nombre)}</h3>
+              <p><strong>DNI:</strong> ${this.escapeHtml(patient.dni)}</p>
+              <p><strong>Edad:</strong> ${patient.edad} años</p>
+              ${patient.diagnostico ? `<p><strong>Diagnóstico:</strong> ${this.escapeHtml(patient.diagnostico)}</p>` : ''}
+            </div>
+            <div class="patient-actions">
+              <button class="btn btn-icon btn-edit" data-id="${patient.id}">
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-icon btn-delete" data-id="${patient.id}">
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+        
+        // Bind edit and delete buttons
+        lista.querySelectorAll('.btn-edit').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            const patient = this.patients.find(p => p.id === id);
+            if (patient) this.openModal(patient);
+          });
+        });
+        
+        lista.querySelectorAll('.btn-delete').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const id = parseInt(e.currentTarget.dataset.id);
+            this.deletePatient(id);
+          });
+        });
+      },
+      
+      renderDashboardCards() {
+        const grid = document.getElementById('cards-grid');
+        const totalPatients = this.patients.length;
+        
+        grid.innerHTML = `
+          <div class="dashboard-card">
+            <div class="card-icon">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="card-content">
+              <h3>Total Pacientes</h3>
+              <p class="card-number">${totalPatients}</p>
+            </div>
+          </div>
+          <div class="dashboard-card" onclick="window.location.hash = '#/pacientes'">
+            <div class="card-icon">
+              <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <div class="card-content">
+              <h3>Gestionar Pacientes</h3>
+              <p>Ver, agregar y editar</p>
+            </div>
+          </div>
+        `;
+      },
+      
+      escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+    };
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+      router.init();
+      patientManager.init();
+    });
+  </script>
 </body>
 </html>
