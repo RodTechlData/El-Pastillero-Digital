@@ -6,16 +6,17 @@
   <title>El Pastillero Digital - Sistema de Gestión de Salud</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    :root{ --bg:#05060a; --bg-elev:#0a0c12; --text:#e6f7ff; --muted:#88a3ad; --cyan:#00e5ff; --cyan-2:#00bcd4; --green:#31ff8b; --danger:#ff4d6d; --card-glow: 0 0 20px rgba(0,229,255,.25), 0 0 40px rgba(49,255,139,.15); --btn-glow: 0 0 12px rgba(0,229,255,.6); --radius:14px; --border:1px solid rgba(0,229,255,.18);} *{box-sizing:border-box}
+    :root{ --bg:#05060a; --bg-elev:#0a0c12; --text:#e6f7ff; --muted:#88a3ad; --cyan:#00e5ff; --cyan-2:#00bcd4; --green:#31ff8b; --danger:#ff4d6d; --card-glow: 0 0 20px rgba(0,229,255,.25), 0 0 40px rgba(49,255,139,.15); --btn-glow: 0 0 12px rgba(0,229,255,.6); --radius:14px; --border:1px solid rgba(0,229,255,.18); }
+    *{box-sizing:border-box}
     html,body{height:100%}
-    body{margin:0; background:radial-gradient(1200px 800px at 80% -10%, rgba(0,229,255,.08), transparent 60%), radial-gradient(1000px 700px at -10% 110%, rgba(49,255,139,.07), transparent 60%), var(--bg); color:var(--text); font:15px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
+    body{margin:0; background: radial-gradient(1200px 800px at 80% -10%, rgba(0,229,255,.08), transparent 60%), radial-gradient(1000px 700px at -10% 110%, rgba(49,255,139,.07), transparent 60%), var(--bg); color:var(--text); font:15px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;}
     .navbar{position:sticky; top:0; z-index:10; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 20px; background:linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.25)); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,229,255,.12)}
     .navbar-brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px}
     .navbar-brand i{color:var(--cyan)}
     .navbar-menu{display:flex; list-style:none; gap:8px; padding:0; margin:0}
     .navbar-menu a{display:flex; align-items:center; gap:8px; padding:8px 12px; color:var(--text); text-decoration:none; border-radius:10px; border:1px solid transparent; transition:.25s ease}
     .navbar-menu a:hover{border-color:rgba(0,229,255,.25); box-shadow: inset 0 0 0 1px rgba(0,229,255,.15), 0 0 12px rgba(0,229,255,.25)}
-    .navbar-menu a.active{color:var(--bg); background:linear-gradient(135deg, var(--cyan), var(--green)); box-shadow: var(--btn-glow)}
+    .navbar-menu a.active{color:var(--bg); background: linear-gradient(135deg, var(--cyan), var(--green)); box-shadow: var(--btn-glow)}
     .container{max-width:1100px; margin:24px auto; padding:0 16px}
     .page-title{font-size:26px; margin:4px 0 6px}
     .page-subtitle{margin:0 0 20px; color:var(--muted)}
@@ -23,7 +24,7 @@
     .dashboard-card{position:relative; background:linear-gradient(180deg, rgba(0,229,255,.05), rgba(49,255,139,.05)); border:var(--border); border-radius:var(--radius); padding:18px; display:flex; gap:14px; align-items:center; cursor:pointer; transition:.25s ease; overflow:hidden}
     .dashboard-card::before{content:""; position:absolute; inset:-1px; border-radius:inherit; background: conic-gradient(from 180deg at 50% 50%, rgba(0,229,255,.25), rgba(49,255,139,.25), rgba(0,229,255,.25)); filter: blur(24px); opacity:.15; pointer-events:none}
     .dashboard-card:hover{transform: translateY(-2px); box-shadow: var(--card-glow)}
-    .card-icon{width:46px; height:46px; display:grid; place-items:center; color:var(--cyan); background:rgba(0,229,255,.12); border:1px solid rgba(0,229,255,.25); border-radius:12px; box-shadow: inset 0 0 18px rgba(0,229,255,.15)}
+    .card-icon{width:46px; height:46px; display:grid; place-items:center; color:var(--cyan); background: rgba(0,229,255,.12); border:1px solid rgba(0,229,255,.25); border-radius:12px; box-shadow: inset 0 0 18px rgba(0,229,255,.15)}
     .card-content{flex:1}
     .card-number{font-size:28px; font-weight:800; margin:2px 0; color:var(--green)}
     .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:10px 0 18px}
@@ -33,158 +34,140 @@
     .btn-danger{background: rgba(255,77,109,.15); border-color: rgba(255,77,109,.4)}
     .search-input{flex:1 1 260px; min-width:200px; padding:10px 12px; border-radius:12px; border:1px solid rgba(0,229,255,.25); background: rgba(5,6,10,.6); color:var(--text); outline:none; transition:.2s}
     .search-input:focus{box-shadow: 0 0 0 3px rgba(0,229,255,.25)}
-    .pacientes-lista{display:grid; gap:10px}
-    .paciente-item{background: var(--bg-elev); border: var(--border); border-radius: 12px; padding:12px; display:grid; grid-template-columns: 1fr auto; gap:12px}
-    .paciente-name{font-weight:700}
-    .paciente-actions{display:flex; gap:8px}
-    .modal{position:fixed; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(0,0,0,.6)}
-    .modal[hidden]{display:none}
-    .modal-content{width:min(880px, 96vw); background:linear-gradient(180deg, rgba(0,229,255,.05), rgba(49,255,139,.05)); border:var(--border); border-radius:16px; padding:18px; box-shadow: var(--card-glow)}
-    .modal-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px}
-    .close{background: transparent; border:1px solid rgba(0,229,255,.35); color:var(--text); border-radius:10px; padding:6px 8px; cursor:pointer}
-    .page[hidden]{display:none}
+    .list{display:grid; gap:10px}
+    .list-item{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; border:var(--border); border-radius:12px; background:rgba(10,12,18,.6)}
+    .list-item .meta{display:flex; gap:12px; align-items:center}
+    .badge{padding:4px 8px; border-radius:999px; border:1px solid rgba(0,229,255,.35); background:rgba(0,229,255,.1); color:var(--text); font-size:12px}
+    .badge.danger{border-color: rgba(255,77,109,.6); background: rgba(255,77,109,.15)}
+    .section-actions{display:flex; gap:8px; align-items:center}
 
-    /* Form grid for dark/cyan layout */
-    .form-grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:12px}
-    .field{display:flex; flex-direction:column; gap:6px}
-    .label{font-size:12px; color:var(--muted)}
-    .control{padding:10px 12px; border-radius:12px; border:1px solid rgba(0,229,255,.25); background: rgba(5,6,10,.6); color:var(--text)}
-    .control:focus{outline:none; box-shadow: 0 0 0 3px rgba(0,229,255,.22)}
-    .col-12{grid-column: span 12}
-    .col-6{grid-column: span 6}
-    .col-4{grid-column: span 4}
-    .col-3{grid-column: span 3}
-    .helper{font-size:12px; color:var(--muted)}
-    .section-title{margin:10px 0 2px; color:var(--cyan)}
-    .hr{height:1px; background: rgba(0,229,255,.15); border:none; margin:8px 0 14px}
-    .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border:1px solid rgba(0,229,255,.25); border-radius:999px; background:rgba(0,229,255,.08); font-size:12px}
+    /* Modal */
+    .modal-backdrop{position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.6); backdrop-filter: blur(4px);}
+    .modal{width:min(720px, 96vw); background:var(--bg-elev); border:var(--border); border-radius:16px; box-shadow: var(--card-glow)}
+    .modal-header{display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border-bottom:1px solid rgba(0,229,255,.15)}
+    .modal-body{padding:14px 16px}
+    .grid{display:grid; grid-template-columns:repeat(12, 1fr); gap:10px}
+    .col-12{grid-column:span 12}
+    .col-6{grid-column:span 6}
+    .col-4{grid-column:span 4}
+    .col-3{grid-column:span 3}
+    .field .label{display:block; margin:4px 0 6px; color:var(--muted)}
+    .control{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(0,229,255,.25); background: rgba(5,6,10,.6); color:var(--text)}
+    .helper{color:var(--muted); font-size:12px}
   </style>
 </head>
 <body>
   <nav class="navbar">
-    <div class="navbar-brand">
-      <i class="fa-solid fa-capsules"></i>
-      El Pastillero Digital
+    <div class="navbar-brand"><i class="fa-solid fa-tablets"></i> El Pastillero Digital</div>
+    <div class="navbar-menu">
+      <a id="link-home" href="#/">Inicio</a>
+      <a id="link-pacientes" href="#/pacientes"><i class="fa-regular fa-user"></i> Pacientes</a>
+      <a id="link-medicamentos" href="#/medicamentos"><i class="fa-solid fa-pills"></i> Medicamentos</a>
     </div>
-    <ul class="navbar-menu">
-      <a id="link-home" data-route="home" href="#/"><i class="fa-solid fa-house"></i> Inicio</a>
-      <a id="link-pacientes" data-route="pacientes" href="#/pacientes"><i class="fa-solid fa-users"></i> Pacientes</a>
-    </ul>
   </nav>
 
-  <main id="app-main" class="container">
-    <section id="home-section" class="page">
-      <h1 class="page-title">Panel Principal</h1>
-      <p class="page-subtitle">Accede a pacientes, signos vitales y medicación</p>
-      <div id="cards-grid" class="cards-grid"></div>
+  <main class="container">
+    <section id="home-section">
+      <h1 class="page-title">Panel</h1>
+      <p class="page-subtitle">Accesos rápidos al sistema</p>
+      <div class="cards-grid">
+        <div class="dashboard-card" onclick="router.go('#/pacientes')">
+          <div class="card-icon"><i class="fa-regular fa-user"></i></div>
+          <div class="card-content">
+            <div>Pacientes</div>
+            <div class="card-number" id="stat-pacientes">0</div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="opacity:.6"></i>
+        </div>
+        <div class="dashboard-card" onclick="router.go('#/medicamentos')">
+          <div class="card-icon"><i class="fa-solid fa-pills"></i></div>
+          <div class="card-content">
+            <div>Medicamentos</div>
+            <div class="card-number" id="stat-medicamentos">0</div>
+          </div>
+          <i class="fa-solid fa-chevron-right" style="opacity:.6"></i>
+        </div>
+      </div>
     </section>
 
-    <section id="pacientes-section" class="page" hidden>
-      <h1 class="page-title">Gestión de Pacientes</h1>
-      <div id="pacientes-toolbar" class="toolbar">
-        <button id="btn-nuevo-paciente" class="btn btn-primary"><i class="fa fa-user-plus"></i> Nuevo Paciente</button>
-        <input id="buscar-paciente" class="search-input" type="search" placeholder="Buscar paciente..." />
+    <section id="pacientes-section" hidden>
+      <h1 class="page-title">Pacientes</h1>
+      <p class="page-subtitle">Gestione sus pacientes</p>
+      <div class="toolbar">
+        <input id="search-pacientes" class="search-input" placeholder="Buscar por nombre o documento" />
+        <button class="btn" id="btn-filter-pacientes-activos">Activos</button>
+        <button class="btn" id="btn-filter-pacientes-todos">Todos</button>
+        <div class="section-actions" style="margin-left:auto">
+          <button class="btn btn-primary" id="btn-add-paciente"><i class="fa fa-plus"></i> Agregar Paciente</button>
+          <button class="btn" onclick="router.go('#/')"><i class="fa fa-arrow-left"></i> Volver</button>
+        </div>
       </div>
-      <div id="pacientes-lista" class="pacientes-lista"></div>
+      <div id="pacientes-list" class="list"></div>
+    </section>
+
+    <section id="medicamentos-section" hidden>
+      <h1 class="page-title">Medicamentos</h1>
+      <p class="page-subtitle">Gestione tratamientos y prescripciones</p>
+      <div class="toolbar">
+        <input id="search-meds" class="search-input" placeholder="Buscar por fármaco o paciente" />
+        <select id="filter-meds-estado" class="control" style="flex:0 0 180px">
+          <option value="todos">Todos</option>
+          <option value="activos">Activos</option>
+          <option value="inactivos">Inactivos</option>
+        </select>
+        <select id="filter-meds-frecuencia" class="control" style="flex:0 0 180px">
+          <option value="todas">Todas las frecuencias</option>
+          <option>Diaria</option>
+          <option>Semanal</option>
+          <option>Mensual</option>
+          <option>Según necesidad</option>
+        </select>
+        <div class="section-actions" style="margin-left:auto">
+          <button class="btn btn-primary" id="btn-add-med"><i class="fa fa-plus"></i> Agregar Fármaco</button>
+          <button class="btn" onclick="router.go('#/')"><i class="fa fa-arrow-left"></i> Volver</button>
+        </div>
+      </div>
+      <div id="meds-list" class="list"></div>
     </section>
   </main>
 
   <!-- Modal Paciente -->
-  <div id="modal-paciente" class="modal" hidden>
-    <div class="modal-content">
+  <div id="modal-paciente" class="modal-backdrop">
+    <form class="modal" id="form-paciente">
       <div class="modal-header">
-        <h3 id="modal-title">Nuevo Paciente</h3>
-        <button id="modal-close" class="close">Cerrar</button>
+        <strong id="paciente-modal-title">Nuevo Paciente</strong>
+        <button type="button" class="btn" onclick="closePacienteModal()"><i class="fa fa-times"></i></button>
       </div>
-      <form id="form-paciente">
-        <div class="form-grid">
-          <!-- Identificación básica -->
-          <div class="col-6 field">
-            <label class="label" for="inp-nombre">Nombre y apellido</label>
-            <input id="inp-nombre" class="control" placeholder="Nombre y apellido" required />
-          </div>
-          <div class="col-3 field">
-            <label class="label" for="inp-edad">Edad</label>
-            <input id="inp-edad" class="control" type="number" min="0" placeholder="Edad" />
-          </div>
-          <div class="col-3 field">
-            <label class="label" for="inp-doc">Documento</label>
-            <input id="inp-doc" class="control" placeholder="Documento" />
-          </div>
-
-          <!-- Contacto -->
-          <div class="col-6 field">
-            <label class="label" for="inp-email">Email</label>
-            <input id="inp-email" class="control" type="email" placeholder="correo@dominio.com" />
-          </div>
-          <div class="col-6 field">
-            <label class="label" for="inp-telefono">Teléfono</label>
-            <input id="inp-telefono" class="control" type="tel" placeholder="Ej: +54 9 11 1234 5678" />
-          </div>
-
-          <hr class="col-12 hr" />
-          <div class="col-12 section-title">Contacto de emergencia</div>
-
-          <div class="col-6 field">
-            <label class="label" for="inp-emerg-nombre">Nombre</label>
-            <input id="inp-emerg-nombre" class="control" placeholder="Nombre de contacto" />
-          </div>
-          <div class="col-3 field">
-            <label class="label" for="inp-emerg-relacion">Relación</label>
-            <input id="inp-emerg-relacion" class="control" placeholder="Relación (familiar, amigo, etc.)" />
-          </div>
-          <div class="col-3 field">
-            <label class="label" for="inp-emerg-telefono">Teléfono</label>
-            <input id="inp-emerg-telefono" class="control" type="tel" placeholder="Teléfono de emergencia" />
-          </div>
-
-          <hr class="col-12 hr" />
-          <div class="col-12 section-title">Historial médico</div>
-
-          <div class="col-12 field">
-            <label class="label" for="inp-patologias">Patologías</label>
-            <textarea id="inp-patologias" class="control" rows="2" placeholder="Antecedentes patológicos relevantes (diabetes, HTA, etc.)"></textarea>
-          </div>
-
-          <!-- Diagnósticos (fecha y médico) -->
-          <div class="col-4 field">
-            <label class="label" for="inp-dx">Diagnóstico</label>
-            <input id="inp-dx" class="control" placeholder="Diagnóstico principal" />
-          </div>
-          <div class="col-4 field">
-            <label class="label" for="inp-dx-medico">Médico</label>
-            <input id="inp-dx-medico" class="control" placeholder="Profesional tratante" />
-          </div>
-          <div class="col-4 field">
-            <label class="label" for="inp-dx-fecha">Fecha</label>
-            <input id="inp-dx-fecha" class="control" type="date" />
-          </div>
-
-          <div class="col-12 field">
-            <div class="helper">Para múltiples diagnósticos, podés separarlos por línea o registrar luego en la ficha.</div>
-          </div>
-
-          <hr class="col-12 hr" />
-          <div class="col-12 section-title">Observaciones</div>
-          <div class="col-12 field">
-            <label class="label" for="inp-observaciones">Notas/Observaciones</label>
-            <textarea id="inp-observaciones" class="control" rows="3" placeholder="Observaciones generales, alergias, indicaciones, etc."></textarea>
-          </div>
+      <div class="modal-body">
+        <div class="grid">
+          <div class="col-6 field"><label class="label" for="pac-nombre">Nombre</label><input id="pac-nombre" class="control" required /></div>
+          <div class="col-3 field"><label class="label" for="pac-edad">Edad</label><input id="pac-edad" class="control" type="number" min="0" /></div>
+          <div class="col-3 field"><label class="label" for="pac-doc">Documento</label><input id="pac-doc" class="control" placeholder="DNI" /></div>
+          <div class="col-12 field"><label class="label" for="pac-notas">Notas</label><textarea id="pac-notas" class="control" rows="2"></textarea></div>
         </div>
-
-        <div class="paciente-actions" style="margin-top:12px">
+        <div class="section-actions" style="margin-top:12px">
           <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Guardar</button>
-          <button type="button" id="modal-cancel" class="btn">Cancelar</button>
+          <button type="button" class="btn" onclick="closePacienteModal()">Cancelar</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 
-  <script>
-    const router = { routes: {'':'home', '#/':'home', '#/pacientes':'pacientes'}, go(hash){ window.location.hash = hash; }, update(){ const hash = window.location.hash || '#/'; const page = this.routes[hash] || 'home'; document.getElementById('home-section').hidden = page !== 'home'; document.getElementById('pacientes-section').hidden = page !== 'pacientes'; document.getElementById('link-home').classList.toggle('active', page==='home'); document.getElementById('link-pacientes').classList.toggle('active', page==='pacientes'); }, init(){ window.addEventListener('hashchange', () => this.update()); this.update(); } };
-
-    const patientManager = {
-      patients: [
-        {id:1, nombre:'Ana Pérez', edad:31, documento:'DNI 32.111.222'},
-        {id:2, nombre:'Carlos López', edad:65, documento:'DNI 12.345.678'},
-        {id:3, nombre:'María Gómez', edad:49
+  <!-- Modal Medicamento -->
+  <div id="modal-med" class="modal-backdrop">
+    <form class="modal" id="form-med">
+      <div class="modal-header">
+        <strong id="med-modal-title">Nuevo Medicamento</strong>
+        <button type="button" class="btn" onclick="closeMedModal()"><i class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body">
+        <div class="grid">
+          <div class="col-6 field"><label class="label" for="med-nombre">Nombre del fármaco</label><input id="med-nombre" class="control" required /></div>
+          <div class="col-3 field"><label class="label" for="med-dosis">Dosis</label><input id="med-dosis" class="control" placeholder="500 mg" /></div>
+          <div class="col-3 field"><label class="label" for="med-frecuencia">Frecuencia</label><select id="med-frecuencia" class="control"><option>Diaria</option><option>Semanal</option><option>Mensual</option><option>Según necesidad</option></select></div>
+          <div class="col-6 field"><label class="label" for="med-paciente">Paciente asignado</label><select id="med-paciente" class="control"></select></div>
+          <div class="col-3 field"><label class="label" for="med-inicio">Inicio</label><input id="med-inicio" type="date" class="control" /></div>
+          <div class="col-3 field"><label class="label" for="med-fin">Fin</label><input id="med-fin" type="date" class="control" /></div>
+          <div class="col-12 field"><label class="label" for="med-horarios">Horarios</label><input id="med-horarios" class="control" placeholder="08:00, 20:00" /></div>
+          <div class="col-12 field"><label class="label" for="med-activo">Estado</label><select id="med-activo" class="control"><option value="true">Activo</option><option value="false">Inactivo</option></select></div>
+         
